@@ -19,12 +19,17 @@ SLID <- SLID[complete.cases(SLID), ]
 ggpairs(SLID)
 ```
 #### Comments:
+- There is medium strong but significant correlation between wages and education and wages and age. 
+- The median for male wages is higher than for females but the range is similar. 
+- The wages do not seem to differ a lot for the three different categories of language. 
+- There is small negative correlation between age and education.
+- The correlation between some of them might be problematic due to multicollinearity. 
 
 ### Which assumptions do we need make about the data if we want to perform a multiple linear regression analysis?
-- 
--
--
--
+- The covariates should be independent --> full rank matrix (p = k+1). 
+- We assume a linear relationship between the variables. 
+- The prediction for the range of dependent value should be equally good. So, homoscedasticity which means equally distributed error for the fitted value. 
+- The expected error should be 0. 
 
 ## Including Plots
 
