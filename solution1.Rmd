@@ -1,0 +1,37 @@
+---
+title: "solution_1"
+output: html_document
+date: "2024-09-02"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Part 1: Explanatory analysis of the dataset
+###Diagnostics plots:
+```{r cars, eval = FALSE}
+install.packages("car")
+library(car)
+library(GGally)
+data(SLID, package = "carData")
+SLID <- SLID[complete.cases(SLID), ]
+ggpairs(SLID)
+```
+#### Comments:
+
+### Which assumptions do we need make about the data if we want to perform a multiple linear regression analysis?
+- 
+-
+-
+-
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
