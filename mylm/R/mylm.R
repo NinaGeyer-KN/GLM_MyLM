@@ -23,6 +23,8 @@ mylm <- function(formula, data = list(), contrasts = NULL, ...){
   #residuals
   residuals <- y - fitted_values
 
+  # standard error
+
 
   # and store the results in the list est
   est <- list(terms = terms, model = mf)
@@ -35,6 +37,7 @@ mylm <- function(formula, data = list(), contrasts = NULL, ...){
   est$fitted_values <- fitted_values
   est$residuals <- residuals
   est$df_residuals <- nrow(X) - length(colnames(X))
+  est$se <- se
 
 
 
