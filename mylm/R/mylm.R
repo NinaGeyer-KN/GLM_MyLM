@@ -27,6 +27,7 @@ mylm <- function(formula, data = list(), contrasts = NULL, ...){
   est$formula <- formula
   est$coeff <- coeff
 
+
   # Set class name. This is very important!
   class(est) <- 'mylm'
 
@@ -42,7 +43,7 @@ print.mylm <- function(object, ...){
   cat('Call:\n')
   print(object$call)
   cat('Coefficients:\n')
-  cat('Intercept : ')
+  cat('(Intercep)t : ')
   cat(format(object$coeff[1], digits = 4), '\n')
   for(i in 2:length(variable_names)){
     cat(variable_names[i],': ')
@@ -54,7 +55,16 @@ print.mylm <- function(object, ...){
 summary.mylm <- function(object, ...){
   # Code here is used when summary(object) is used on objects of class "mylm"
   # Useful functions include cat, print.default and format
-  cat('Summary of object\n')
+  cat('Call:\n')
+  print(object$call)
+  cat('\nResiduals:\n')
+
+  cat('Coefficients:\n')
+  cat('(Intercep)t : ')
+
+  print('Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1')
+
+
 }
 
 plot.mylm <- function(object, ...){
