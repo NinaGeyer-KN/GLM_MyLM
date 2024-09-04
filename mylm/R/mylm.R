@@ -64,6 +64,9 @@ summary.mylm <- function(object, ...){
 
   print('Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1')
 
+  cat('Residual standard error: ', 'on ', 'degrees of freedom', '\n') # values missing
+  cat('Multiple R-squared: ', ', ', 'Adjusted R-squared: ' )
+  cat(' F-statistic: ', 'on', 'and', 'DF, p-value:', )
 
 }
 
