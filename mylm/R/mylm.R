@@ -38,8 +38,6 @@ print.mylm <- function(object, ...){
   # Code here is used when print(object) is used on objects of class "mylm"
   # Useful functions include cat, print.default and format
   variable_names = all.vars(object$formula)
-  #max_length <- max(lapply(variable_names, length))
-  print(variable_names)
 
   cat('Call:\n')
   print(object$call)
@@ -47,7 +45,7 @@ print.mylm <- function(object, ...){
   cat('Intercept : ')
   cat(format(object$coeff[1], digits = 4), '\n')
   for(i in 2:length(variable_names)){
-    cat(str_pad(variable_names[i], width = max_length + 2, side = "right", pad = " "),': ')
+    cat(variable_names[i],': ')
     cat(format(object$coeff[i], digits = 4), '\n')
 
   }
