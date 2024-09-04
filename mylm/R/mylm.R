@@ -13,6 +13,11 @@ mylm <- function(formula, data = list(), contrasts = NULL, ...){
   # Add code here to calculate coefficients, residuals, fitted values, etc...
   # coefficients
   coeff <- solve(t(X) %*% X) %*% t(X) %*% y
+  coeff_list <- as.list(coeff[,1])
+
+  # Assign names to coefficients
+  names(coeff_list) <- colnames(X)
+
   # fitted values
   fitted_values <- X %*% coeff
   #residuals
@@ -25,7 +30,12 @@ mylm <- function(formula, data = list(), contrasts = NULL, ...){
   # Store call and formula used
   est$call <- match.call()
   est$formula <- formula
-  est$coeff <- coeff
+  est$coeff <- coeff_list
+  est$rank <- length(colnames(X))
+  est$fitted_values <- fitted_values
+  est$residuals <- residuals
+  est$df_residuals <- nrow(X) - length(colnames(X))
+
 
 
   # Set class name. This is very important!
@@ -42,25 +52,48 @@ print.mylm <- function(object, ...){
 
   cat('Call:\n')
   print(object$call)
-  cat('Coefficients:\n')
-  cat('(Intercep)t : ')
-  cat(format(object$coeff[1], digits = 4), '\n')
-  for(i in 2:length(variable_names)){
-    cat(variable_names[i],': ')
-    cat(format(object$coeff[i], digits = 4), '\n')
-
+  cat('\nCoefficients:\n')
+  for (name in names(object$coeff)) {
+    cat(name, ': ')
+    cat(format(object$coeff[[name]], digits = 4), '\n')
   }
 }
 
 summary.mylm <- function(object, ...){
   # Code here is used when summary(object) is used on objects of class "mylm"
   # Useful functions include cat, print.default and format
+
+  ## Call
   cat('Call:\n')
   print(object$call)
-  cat('\nResiduals:\n')
 
-  cat('Coefficients:\n')
-  cat('(Intercep)t : ')
+  ## Residuals
+  # set up values
+  summary_residuals <- c(
+    Min = min(object$residuals),
+    Q1 = quantile(object$residuals, 0.25),
+    Median = median(object$residuals),
+    Q3 = quantile(object$residuals, 0.75),
+    Max = max(object$residuals)
+  )
+  formatted_residuals <- format(summary_residuals, digits = 4, nsmall = 3, justify = "right")
+  max_width <- max(nchar(formatted_residuals))
+  formatted_residuals <- format(summary_residuals, digits = 4, nsmall = 3, justify = "right")
+
+  # printing
+  cat('\nResiduals:\n')
+  cat("Min", strrep(" ", max_width - nchar("Min")+2), "1Q",
+      strrep(" ", max_width - nchar("1Q")+2), "Median",
+      strrep(" ", max_width - nchar("Median")+2), "3Q",
+      strrep(" ", max_width - nchar("3Q")+2), "Max\n")
+  cat(formatted_residuals[1], " ", formatted_residuals[2], " ",
+      formatted_residuals[3], " ", formatted_residuals[4], " ",
+      formatted_residuals[5], "\n")
+
+
+
+  cat('\nCoefficients:\n')
+
 
   print('Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1')
 
