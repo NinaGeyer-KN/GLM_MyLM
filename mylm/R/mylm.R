@@ -74,7 +74,29 @@ summary.mylm <- function(object, ...){
   XtX_inv <- solve(t(X)%*%X)
   cov_matrix <- sigma2*XtX_inv
   stderr <- sqrt(diag(cov_matrix))
-  #
+
+
+  # z and p values
+  z <- as.numeric(object$coeff) / as.numeric(stderr)
+  p <- 2 * (1 - pnorm(abs(z)))
+
+  # significance levels
+  sig_level <- list()
+  for (value in p) {
+    # Determine the significance level and append to the list
+    if (value < 0.001) {
+      sig_level[[length(sig_level) + 1]] <- '***'
+    } else if (value < 0.01) {
+      sig_level[[length(sig_level) + 1]] <- '**'
+    } else if (value < 0.05) {
+      sig_level[[length(sig_level) + 1]] <- '*'
+    } else if (value < 0.1) {
+      sig_level[[length(sig_level) + 1]] <- '.'
+    } else {
+      sig_level[[length(sig_level) + 1]] <- ' '
+    }
+  }
+
 
   ## Call
   cat('Call:\n')
@@ -111,21 +133,38 @@ summary.mylm <- function(object, ...){
 
 
   cat('\nCoefficients:\n')
-  cat(strrep(" ", 15), 'Estimate', strrep(" ", 5), 'Std. Error ',strrep(" ", 5), "z value ", strrep(" ", 5), "Pr(>|z|) \n")
+  max_name = max(nchar(names(object$coeff)))
+  formatted_coeff<- format(object$coeff, digits = 4, nsmall = 6,justify = "right", trim = TRUE)
+  max_width <- max(nchar(formatted_coeff))
+  formatted_coeff <- format(object$coeff, digits = 4, nsmall = 6, justify = "right", trim = TRUE)
+
+
+  cat(strrep(" ", max_name+2),
+      str_pad('Estimate', max_width+3, 'right'),
+      str_pad('Std. Error', max_width+3, 'right'),
+      str_pad("z value", max_width+3, 'right'),
+      str_pad( "Pr(>|z|)", max_width+3, 'right'), '\n')
   i <- 1
   for (name in names(object$coeff)) {
-    cat(name, ' ')
-    cat(strrep(" ", 15 - nchar(name)), format(object$coeff[[name]], nsmall=5, digits=5), strrep(" ", 5), format(stderr[i], nsmall=5, digits=5), '\n')
+    cat(str_pad(name, max_name+3, 'right'))
+    cat(
+        str_pad(formatted_coeff[[name]], max_width+3, 'right'),
+        str_pad(format(stderr[i], digits = 4, nsmall = 6, justify = "right", trim = TRUE), max_width+3, 'right'),
+        str_pad(format(z[i], digits = 4, nsmall = 6, justify = "right", trim = TRUE), max_width+3, 'right'),
+        str_pad(paste(format(p[i], digits = 4, nsmall = 6, justify = "right", trim = TRUE), sig_level[i]), max_width+3, 'right'),
+        '\n')
     i <- i+1
   }
 
   R_sqrd <- 1-(RSS/object$TSS)
+  F_stat <- ((1/object$rank-1)*(object$TSS-RSS))/(RSS/object$dof_residuals )
+  #p_F <-
 
-  print('Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1')
+  cat('\nSignif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1\n')
 
   cat('Residual standard error: ', format(sqrt(sigma2), digits=4), 'on ', object$dof_residuals,'degrees of freedom', '\n') # values missing
   cat('Multiple R-squared: ', format(R_sqrd, digits=4), ', ', 'Adjusted R-squared: ', format(1-((1-R_sqrd)*(nrow(X)-1)/object$dof_residuals), digits=4), "\n")
-  cat('F-statistic: ', 'on', 'and', 'DF, p-value:' )
+  cat('F-statistic: ', F_stat, 'on',object$rank-1, 'and',object$dof_residuals ,'DF, p-value:' )
 
 }
 
@@ -136,7 +175,11 @@ plot.mylm <- function(object, ...){
   # ggplot requires that the data is in a data.frame, this must be done here
   data_plot <- data.frame(Fitted = object$fitted_values, Residuals=object$residuals)
 
-    ggplot(data_plot, aes(x=Fitted, y=Residuals)) + geom_point()
+    ggplot(data_plot, aes(x=Fitted, y=Residuals)) + geom_point(shape = 1, size = 2) +
+      ggtitle('Residuals vs Fitted') +
+      labs(x = 'Fitted Values', y = 'Residuals') +
+      geom_hline(yintercept = 0, linetype = "dashed", color = "grey") +
+      theme_minimal()
 
   # if you want the plot to look nice, you can e.g. use "labs" to add labels, and add colors in the geom_point-function
 
