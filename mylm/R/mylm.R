@@ -23,8 +23,8 @@ mylm <- function(formula, data = list(), contrasts = NULL, ...){
   #residuals
   residuals <- y - fitted_values
 
-  TSS <- sum((y-mean(y))^2)
 
+  TSS <- sum((y-mean(y))^2)
 
   # and store the results in the list est
   est <- list(terms = terms, model = mf)
@@ -36,10 +36,10 @@ mylm <- function(formula, data = list(), contrasts = NULL, ...){
   est$rank <- length(colnames(X))
   est$fitted_values <- fitted_values
   est$residuals <- residuals
+
   est$dof_residuals <- nrow(X) - length(colnames(X))
   est$data_matrix <- X
   est$TSS <- TSS
-
 
 
   # Set class name. This is very important!
