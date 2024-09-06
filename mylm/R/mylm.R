@@ -89,19 +89,24 @@ summary.mylm <- function(object, ...){
     Q3 = quantile(object$residuals, 0.75),
     Max = max(object$residuals)
   )
-  formatted_residuals <- format(summary_residuals, digits = 4, nsmall = 3, justify = "right")
+  formatted_residuals <- format(summary_residuals, digits = 4, nsmall = 3,justify = "right", trim = TRUE)
   max_width <- max(nchar(formatted_residuals))
-  formatted_residuals <- format(summary_residuals, digits = 4, nsmall = 3, justify = "right")
+  formatted_residuals <- format(summary_residuals, digits = 4, nsmall = 3, justify = "right", trim = TRUE)
 
   # printing
   cat('\nResiduals:\n')
-  cat("Min", strrep(" ", max_width - nchar("Min")+2), "1Q",
-      strrep(" ", max_width - nchar("1Q")+2), "Median",
-      strrep(" ", max_width - nchar("Median")+2), "3Q",
-      strrep(" ", max_width - nchar("3Q")+2), "Max\n")
-  cat(formatted_residuals[1], " ", formatted_residuals[2], " ",
-      formatted_residuals[3], " ", formatted_residuals[4], " ",
-      formatted_residuals[5], "\n")
+
+  cat(str_pad("Min", max_width+2, side = 'right'),
+      str_pad("1Q", max_width+2, side = 'right'),
+      str_pad("Median", max_width+2, side = 'right'),
+      str_pad("3Q", max_width+2, side = 'right'),
+      str_pad("Max", max_width+2, side = 'right'), "\n")
+  cat(str_pad(formatted_residuals[1], max_width+2, side = 'right'),
+      str_pad(formatted_residuals[2], max_width+2, side = 'right'),
+      str_pad(formatted_residuals[3], max_width+2, side = 'right'),
+      str_pad(formatted_residuals[4], max_width+2, side = 'right'),
+      str_pad(formatted_residuals[5], max_width+2, side = 'right'), "\n")
+
 
 
 
