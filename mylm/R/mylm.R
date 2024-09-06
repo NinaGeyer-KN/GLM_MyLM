@@ -23,8 +23,8 @@ mylm <- function(formula, data = list(), contrasts = NULL, ...){
   #residuals
   residuals <- y - fitted_values
 
-  # standard error
 
+  TSS <- sum((y-mean(y))^2)
 
   # and store the results in the list est
   est <- list(terms = terms, model = mf)
@@ -36,9 +36,10 @@ mylm <- function(formula, data = list(), contrasts = NULL, ...){
   est$rank <- length(colnames(X))
   est$fitted_values <- fitted_values
   est$residuals <- residuals
-  est$df_residuals <- nrow(X) - length(colnames(X))
-  est$se <- se
 
+  est$dof_residuals <- nrow(X) - length(colnames(X))
+  est$data_matrix <- X
+  est$TSS <- TSS
 
 
   # Set class name. This is very important!
@@ -65,6 +66,15 @@ print.mylm <- function(object, ...){
 summary.mylm <- function(object, ...){
   # Code here is used when summary(object) is used on objects of class "mylm"
   # Useful functions include cat, print.default and format
+
+  #
+  X <- object$data_matrix
+  RSS <- sum(object$residuals^2)
+  sigma2 <- RSS/object$dof_residuals
+  XtX_inv <- solve(t(X)%*%X)
+  cov_matrix <- sigma2*XtX_inv
+  stderr <- sqrt(diag(cov_matrix))
+  #
 
   ## Call
   cat('Call:\n')
@@ -96,13 +106,21 @@ summary.mylm <- function(object, ...){
 
 
   cat('\nCoefficients:\n')
+  cat(strrep(" ", 15), 'Estimate', strrep(" ", 5), 'Std. Error ',strrep(" ", 5), "z value ", strrep(" ", 5), "Pr(>|z|) \n")
+  i <- 1
+  for (name in names(object$coeff)) {
+    cat(name, ' ')
+    cat(strrep(" ", 15 - nchar(name)), format(object$coeff[[name]], nsmall=5, digits=5), strrep(" ", 5), format(stderr[i], nsmall=5, digits=5), '\n')
+    i <- i+1
+  }
 
+  R_sqrd <- 1-(RSS/object$TSS)
 
   print('Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1')
 
-  cat('Residual standard error: ', 'on ', 'degrees of freedom', '\n') # values missing
-  cat('Multiple R-squared: ', ', ', 'Adjusted R-squared: ' )
-  cat(' F-statistic: ', 'on', 'and', 'DF, p-value:', )
+  cat('Residual standard error: ', format(sqrt(sigma2), digits=4), 'on ', object$dof_residuals,'degrees of freedom', '\n') # values missing
+  cat('Multiple R-squared: ', format(R_sqrd, digits=4), ', ', 'Adjusted R-squared: ', format(1-((1-R_sqrd)*(nrow(X)-1)/object$dof_residuals), digits=4), "\n")
+  cat('F-statistic: ', 'on', 'and', 'DF, p-value:' )
 
 }
 
@@ -111,7 +129,9 @@ plot.mylm <- function(object, ...){
 
   library(ggplot2)
   # ggplot requires that the data is in a data.frame, this must be done here
-  ggplot() + geom_point()
+  data_plot <- data.frame(Fitted = object$fitted_values, Residuals=object$residuals)
+
+    ggplot(data_plot, aes(x=Fitted, y=Residuals)) + geom_point()
 
   # if you want the plot to look nice, you can e.g. use "labs" to add labels, and add colors in the geom_point-function
 
