@@ -18,25 +18,69 @@ data(SLID, package = "carData")
 SLID <- SLID[complete.cases(SLID), ]
 ggpairs(SLID)
 ```
-#### Comments:
-- There is medium strong but significant correlation between wages and education and wages and age. 
-- The median for male wages is higher than for females but the range is similar. 
-- The wages do not seem to differ a lot for the three different categories of language. 
-- There is small negative correlation between age and education.
-- The correlation between some of them might be problematic due to multicollinearity. 
+## Part 2:  Linear regression with the mylm package
 
-### Which assumptions do we need make about the data if we want to perform a multiple linear regression analysis?
-- The covariates should be independent --> full rank matrix (p = k+1). 
-- We assume a linear relationship between the variables. 
-- The prediction for the range of dependent value should be equally good. So, homoscedasticity which means equally distributed error for the fitted value. 
-- The expected error should be 0. 
+### Questions:
+What are the estimates and standard errors of the intercept and regression coefficient for this model?
+-
+What is the interpretation of the parameter estimates?
+-
 
-## Including Plots
+```{r linear regression, eval = FALSE}
+#install.packages("car")
+#install.packages("mylm")
+library(mylm)
+library(car)
+library(GGally)
+library(stringr)
+data(SLID, package = "carData")
+SLID <- SLID[complete.cases(SLID), ]
 
-You can also embed plots, for example:
+# comparison simple model
+model1 <- mylm(wages ~ education, data = SLID)
+print(model1)
 
-```{r pressure, echo=FALSE}
-plot(pressure)
+model1b <- lm(wages ~ education, data = SLID)
+print(model1b)
+
+# summary 
+summary(model1)
+summary(model1b)
+
 ```
+### Plot 
+```{r linear regression plot, eval = FALSE}
+plot(model1)
+```
+Comments: 
+- 
+
+### ANOVA
+-What is the residual sum of squares (SSE) and the degrees of freedom for this model?
+-What is total sum of squares (SST) for this model? Test the significance of the regression using a 𝜒2-test.
+-What is the relationship between the 𝜒2- and 𝑧-statistic in simple linear regression? Find the critical value(s) for both tests.
+```{r linear regression anova, eval = FALSE}
+anova(model1)
+```
+Comments: 
+- 
+
+# Part 3: Multiple Linear Regression 
+```{r MLR, eval = FALSE}
+model2 <- mylm(y ~ x1 + x2, data = myframe)
+```
+-What are the estimates and standard errors of the intercepts and regression coefficients for this model? 
+-Test the significance of the coefficients using a 𝑧-test.
+-What is the interpretation of the parameters?
+
+### Comparison simple linear regression and multiple linear regression 
+```{r MLR, eval = FALSE}
+model1
+model1c <- mylm(wages ~ age, data = myframe)
+
+model2 <- mylm(wages ~ education + age, data = myframe)
+```
+
+# Part 4: Testing mylm 
 
 Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.

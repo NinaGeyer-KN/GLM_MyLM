@@ -59,7 +59,7 @@ print.mylm <- function(object, ...){
   cat('\nCoefficients:\n')
   for (name in names(object$coeff)) {
     cat(name, ': ')
-    cat(format(object$coeff[[name]], digits = 4), '\n')
+    cat(format(object$coeff[[name]], digits = 4, nsmall = 4), '\n')
   }
 }
 
@@ -134,9 +134,9 @@ summary.mylm <- function(object, ...){
 
   cat('\nCoefficients:\n')
   max_name = max(nchar(names(object$coeff)))
-  formatted_coeff<- format(object$coeff, digits = 4, nsmall = 6,justify = "right", trim = TRUE)
+  formatted_coeff<- format(object$coeff, nsmall = 4,justify = "right", trim = TRUE)
   max_width <- max(nchar(formatted_coeff))
-  formatted_coeff <- format(object$coeff, digits = 4, nsmall = 6, justify = "right", trim = TRUE)
+  formatted_coeff <- format(object$coeff, nsmall = 4, justify = "right", trim = TRUE)
 
 
   cat(strrep(" ", max_name+2),
@@ -149,9 +149,9 @@ summary.mylm <- function(object, ...){
     cat(str_pad(name, max_name+3, 'right'))
     cat(
         str_pad(formatted_coeff[[name]], max_width+3, 'right'),
-        str_pad(format(stderr[i], digits = 4, nsmall = 6, justify = "right", trim = TRUE), max_width+3, 'right'),
-        str_pad(format(z[i], digits = 4, nsmall = 6, justify = "right", trim = TRUE), max_width+3, 'right'),
-        str_pad(paste(format(p[i], digits = 4, nsmall = 6, justify = "right", trim = TRUE), sig_level[i]), max_width+3, 'right'),
+        str_pad(format(stderr[i], digits = 1, nsmall = 4, justify = "right", trim = TRUE), max_width+3, 'right'),
+        str_pad(format(z[i], digits = 1, nsmall = 4, justify = "right", trim = TRUE), max_width+3, 'right'),
+        str_pad(paste(format(p[i], digits = 1, nsmall = 4, justify = "right", trim = TRUE), sig_level[i]), max_width+3, 'right'),
         '\n')
     i <- i+1
   }
