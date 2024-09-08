@@ -9,6 +9,6 @@ mylm1 = mylm(wages ~ education + age, SLID)
 mylm(wages ~ education + age, SLID)
 summary(lm1)
 summary(mylm1)
-plot(mylm1)
-
+anova(mylm1)
+anova(lm1)
 

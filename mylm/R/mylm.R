@@ -157,14 +157,14 @@ summary.mylm <- function(object, ...){
   }
 
   R_sqrd <- 1-(RSS/object$TSS)
-  F_stat <- ((1/object$rank-1)*(object$TSS-RSS))/(RSS/object$dof_residuals )
-  #p_F <-
+  F_stat <- ((object$TSS-RSS)/(object$rank-1))/(RSS/object$dof_residuals )
+  p_value_f <- 1 - pf(F_stat, df1 = object$rank - 1, df2 = object$dof_residuals)
 
   cat('\nSignif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1\n')
 
   cat('Residual standard error: ', format(sqrt(sigma2), digits=4), 'on ', object$dof_residuals,'degrees of freedom', '\n') # values missing
   cat('Multiple R-squared: ', format(R_sqrd, digits=4), ', ', 'Adjusted R-squared: ', format(1-((1-R_sqrd)*(nrow(X)-1)/object$dof_residuals), digits=4), "\n")
-  cat('F-statistic: ', F_stat, 'on',object$rank-1, 'and',object$dof_residuals ,'DF, p-value:' )
+  cat('F-statistic: ', format(F_stat,digits = 1, nsmall = 1), 'on',object$rank-1, 'and',object$dof_residuals ,'DF, p-value:', format(p_value_f ,digits = 1, nsmall = 3),'\n' )
 
 }
 
@@ -194,6 +194,21 @@ anova.mylm <- function(object, ...){
   # Name of response
   response <- deparse(object$terms[[2]])
 
+  # Total Sum of Squares (TSS)
+  TSS <- sum((object$model[[response]] - mean(object$model[[response]]))^2)
+
+  # Fit the sequence of models
+  txtFormula <- paste(response, "~", sep = "") # for the formula for lm
+  print(txtFormula)
+  model <- list()
+  RSS <- numeric(length(comp) + 1)  # empty to store RSS
+  df <- numeric(length(comp) + 1)   # empty to store df
+
+  # First model (only intercept)
+  RSS[1] <- TSS
+  df[1] <- nrow(object$model) - 1
+
+
   # Fit the sequence of models
   txtFormula <- paste(response, "~", sep = "")
   model <- list()
@@ -206,16 +221,95 @@ anova.mylm <- function(object, ...){
     }
     formula <- formula(txtFormula)
     model[[numComp]] <- lm(formula = formula, data = object$model)
+    # Fit the new model and calculate RSS
+    model[[numComp]] <- lm(formula = formula, data = object$model)
+    RSS[numComp + 1] <- sum(model[[numComp]]$residuals^2)
+    df[numComp + 1] <- model[[numComp]]$df.residual
+  }
+  # empty list to store values
+  anova_table <- list()
+
+  # Loop through the models and calculate stats
+  for (numComp in 1:length(comp)) {
+    # Calculate difference in RSS
+    SS_diff <- RSS[numComp] - RSS[numComp + 1]
+    df_diff <- df[numComp] - df[numComp + 1]
+    MS_diff <- SS_diff / df_diff  # Mean square for the model
+    MS_residual <- RSS[numComp + 1] / df[numComp + 1]  # for Chi^2 statistic
+
+    # Chi^2 statistic
+    chi_sq <- SS_diff / MS_residual
+
+    # P-value from Chi-squared distribution
+    p_value <- pchisq(chi_sq, df_diff, lower.tail = FALSE)
+
+    # Store the values in the list
+    anova_table[[numComp]] <- c(df_diff, SS_diff, MS_diff, chi_sq, p_value)
   }
 
-  # Print Analysis of Variance Table
+  # Convert the list to df
+  anova_df <- as.data.frame(do.call(rbind, anova_table))
+  colnames(anova_df) <- c("Df", "Sum_Sq", "Mean_Sq", "Chi^2", "Pr(>Chi)")
+
+  anova_df[["Sum_Sq"]] <- round(anova_df[["Sum_Sq"]], 0)
+  anova_df[['Mean_Sq']] <- round(anova_df[['Mean_Sq']], 0)
+  anova_df[['Chi^2']] <- round(anova_df[['Chi^2']], 3)
+  anova_df[['Pr(>Chi)']] <- round(anova_df[['Pr(>Chi)']], 3)
+
+
+  # Define the significance function
+  get_significance <- function(p_value) {
+    if (p_value < 0.001) {
+      return("***")
+    } else if (p_value < 0.01) {
+      return("**")
+    } else if (p_value < 0.05) {
+      return("*")
+    } else if (p_value < 0.1) {
+      return(".")
+    } else {
+      return(" ")
+    }
+  }
+  anova_df$Signif <- sapply(as.numeric(anova_df[['Pr(>Chi)']]), get_significance)
+
+  # Find max for formatting
+  max_lengths <- sapply(anova_df, function(col) max(nchar(as.character(col))))
+  max_width <- max(max_lengths)
+  max_name = max(nchar(names(object$coeff)))
+
+  # Prepare to print ANOVA table with formatted widths
   cat('Analysis of Variance Table\n')
   cat(c('Response: ', response, '\n'), sep = '')
-  cat('          Df  Sum sq X2 value Pr(>X2)\n')
-  for(numComp in 1:length(comp)){
-    # Add code to print the line for each model tested
+
+  cat(strrep(" ", max_name+2),
+      str_pad('Df', max_width+3, 'right'),
+      str_pad('Sum Sq', max_width+3, 'right'),
+      str_pad("Mean Sq", max_width+3, 'right'),
+      str_pad("Chi^2", max_width+3, 'right'),
+      str_pad( "Pr(>Chi^2)", max_width+3, 'right'), '\n')
+  i <- 1
+  for (i in 1:nrow(anova_df)) {
+    cat(str_pad(comp[i], max_name+3, 'right'))
+    cat(
+      str_pad(anova_df[i, "Df"], max_width+3, 'right'),
+      str_pad(anova_df[i, "Sum_Sq"], max_width+3, 'right'),
+      str_pad(anova_df[i, "Mean_Sq"], max_width+3, 'right'),
+      str_pad(anova_df[i, "Chi^2"], max_width+3, 'right'),
+      str_pad(paste(anova_df[i, "Pr(>Chi)"],anova_df$Signif), max_width+3, 'right'),
+      '\n')
+    i <- i+1
   }
 
-  return(model)
+  residual_SumSq <- RSS[1] - sum(as.numeric(anova_df$Sum_Sq))
+  residual_Mean_Sq <- residual_SumSq/object$dof_residuals
+  cat(str_pad('Residuals', max_name+2, 'right'),
+      str_pad(object$dof_residuals, max_width+3, 'right'),
+      str_pad(round(residual_SumSq), max_width+3, 'right'),
+      str_pad(round(residual_Mean_Sq), max_width+3, 'right'))
+  cat('\nSignif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1\n')
+
+  #return(model)
 
 }
+
