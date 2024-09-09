@@ -1,0 +1,36 @@
+* installing *source* package ‘mylm’ ...
+** using staged installation
+** R
+** byte-compile and prepare package for lazy loading
+Call:
+mylm(formula = wages ~ education + age, data = SLID)
+
+Residuals:
+Min       1Q        Median    3Q        Max       
+-24.303   -4.495    -0.807    3.674     37.628    
+
+Coefficients:
+              Estimate     Std. Error   z value      Pr(>|z|)     
+(Intercept)   -6.021653    0.6189       -9.7292      0.0000 ***   
+education     0.9014644    0.0358       25.2089      0.0000 ***   
+age           0.2570898    0.0090       28.7212      0.0000 ***   
+
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+Residual standard error:  6.82 on  3984 degrees of freedom 
+Multiple R-squared:  0.2491 ,  Adjusted R-squared:  0.2487 
+F-statistic:  660.7 on 2 and 3984 DF, p-value: 0.000 
+[1] "wages~"
+Analysis of Variance Table
+Response: wages
+              Df         Sum Sq     Mean Sq    Chi^2      Pr(>Chi^2) 
+education     1          23096      23096      411.447    0 ***      0 ***      
+age           1          38372      38372      824.905    0 ***      0 ***      
+Residuals     3984       185322     47        
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+** help
+*** installing help indices
+** building package indices
+** testing if installed package can be loaded from temporary location
+** testing if installed package can be loaded from final location
+** testing if installed package keeps a record of temporary installation path
+* DONE (mylm)

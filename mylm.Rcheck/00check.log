@@ -1,0 +1,108 @@
+* using log directory ‘/Users/ninageyer/Library/CloudStorage/OneDrive-Personal/Dokumente/MScSEDS/3_GLM/GLM_assignment/GLM_MyLM/mylm.Rcheck’
+* using R version 4.3.3 (2024-02-29)
+* using platform: aarch64-apple-darwin20 (64-bit)
+* R was compiled by
+    Apple clang version 14.0.0 (clang-1400.0.29.202)
+    GNU Fortran (GCC) 12.2.0
+* running under: macOS Sonoma 14.5
+* using session charset: UTF-8
+* using options ‘--no-manual --as-cran’
+* checking for file ‘mylm/DESCRIPTION’ ... OK
+* checking extension type ... Package
+* this is package ‘mylm’ version ‘0.1.0’
+* package encoding: UTF-8
+* checking package namespace information ... OK
+* checking package dependencies ... OK
+* checking if this is a source package ... OK
+* checking if there is a namespace ... OK
+* checking for executable files ... OK
+* checking for hidden files and directories ... OK
+* checking for portable file names ... OK
+* checking for sufficient/correct file permissions ... OK
+* checking serialization versions ... OK
+* checking whether package ‘mylm’ can be installed ... OK
+* checking installed package size ... OK
+* checking package directory ... OK
+* checking for future file timestamps ... OK
+* checking DESCRIPTION meta-information ... WARNING
+Non-standard license specification:
+  What license is it under?
+Standardizable: FALSE
+* checking top-level files ... OK
+* checking for left-over files ... OK
+* checking index information ... OK
+* checking package subdirectories ... OK
+* checking R files for non-ASCII characters ... WARNING
+Found the following file with non-ASCII characters:
+  mylm.R
+Portable packages must use only ASCII characters in their R code,
+except perhaps in comments.
+Use \uxxxx escapes for other characters.
+* checking R files for syntax errors ... OK
+* checking whether the package can be loaded ... OK
+* checking whether the package can be loaded with stated dependencies ... OK
+* checking whether the package can be unloaded cleanly ... OK
+* checking whether the namespace can be loaded with stated dependencies ... OK
+* checking whether the namespace can be unloaded cleanly ... OK
+* checking dependencies in R code ... WARNING
+'library' or 'require' call not declared from: ‘ggplot2’
+'library' or 'require' call to ‘ggplot2’ in package code.
+  Please use :: or requireNamespace() instead.
+  See section 'Suggested packages' in the 'Writing R Extensions' manual.
+* checking S3 generic/method consistency ... OK
+* checking replacement functions ... OK
+* checking foreign function calls ... OK
+* checking R code for possible problems ... NOTE
+anova.mylm: no visible global function definition for ‘lm’
+anova.mylm: no visible global function definition for ‘pchisq’
+anova.mylm: no visible global function definition for ‘str_pad’
+mylm: no visible global function definition for ‘model.frame’
+mylm: no visible global function definition for ‘model.matrix’
+mylm: no visible global function definition for ‘model.response’
+plot.mylm: no visible global function definition for ‘ggplot’
+plot.mylm: no visible global function definition for ‘aes’
+plot.mylm: no visible binding for global variable ‘Fitted’
+plot.mylm: no visible binding for global variable ‘Residuals’
+plot.mylm: no visible global function definition for ‘geom_point’
+plot.mylm: no visible global function definition for ‘ggtitle’
+plot.mylm: no visible global function definition for ‘labs’
+plot.mylm: no visible global function definition for ‘geom_hline’
+plot.mylm: no visible global function definition for ‘theme_minimal’
+summary.mylm: no visible global function definition for ‘pnorm’
+summary.mylm: no visible global function definition for ‘quantile’
+summary.mylm: no visible global function definition for ‘median’
+summary.mylm: no visible global function definition for ‘str_pad’
+summary.mylm: no visible global function definition for ‘pf’
+Undefined global functions or variables:
+  Fitted Residuals aes geom_hline geom_point ggplot ggtitle labs lm
+  median model.frame model.matrix model.response pchisq pf pnorm
+  quantile str_pad theme_minimal
+Consider adding
+  importFrom("stats", "lm", "median", "model.frame", "model.matrix",
+             "model.response", "pchisq", "pf", "pnorm", "quantile")
+to your NAMESPACE file.
+
+Found the following calls to data() loading into the global environment:
+File ‘mylm/R/test.R’:
+  data(SLID, package = "carData")
+See section ‘Good practice’ in ‘?data’.
+* checking Rd files ... OK
+* checking Rd metadata ... OK
+* checking Rd line widths ... OK
+* checking Rd cross-references ... OK
+* checking for missing documentation entries ... WARNING
+Undocumented code objects:
+  ‘SLID’ ‘anova.mylm’ ‘lm1’ ‘mylm’ ‘mylm1’ ‘plot.mylm’ ‘print.mylm’
+  ‘summary.mylm’
+All user-level objects in a package should have documentation entries.
+See chapter ‘Writing R documentation files’ in the ‘Writing R
+Extensions’ manual.
+* checking for code/documentation mismatches ... OK
+* checking Rd \usage sections ... OK
+* checking Rd contents ... OK
+* checking for unstated dependencies in examples ... OK
+* checking examples ... OK
+* checking for non-standard things in the check directory ... OK
+* checking for detritus in the temp directory ... OK
+* DONE
+Status: 4 WARNINGs, 1 NOTE

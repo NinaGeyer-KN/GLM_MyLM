@@ -38,19 +38,19 @@ SLID <- SLID[complete.cases(SLID), ]
 
 # comparison simple model
 model1 <- mylm(wages ~ education, data = SLID)
-print(model1)
-
 model1b <- lm(wages ~ education, data = SLID)
-print(model1b)
+
+# print
+print.mylm(model1)
 
 # summary 
-summary(model1)
+summary.mylm(model1)
 summary(model1b)
 
 ```
 ### Plot 
 ```{r linear regression plot, eval = FALSE}
-plot(model1)
+plot.mylm(model1)
 ```
 Comments: 
 - 
@@ -60,7 +60,7 @@ Comments:
 -What is total sum of squares (SST) for this model? Test the significance of the regression using a 𝜒2-test.
 -What is the relationship between the 𝜒2- and 𝑧-statistic in simple linear regression? Find the critical value(s) for both tests.
 ```{r linear regression anova, eval = FALSE}
-anova(model1)
+anova.mylm(model1)
 ```
 Comments: 
 - 
@@ -85,13 +85,19 @@ model2 <- mylm(wages ~ education + age, data = myframe)
 ```{r Test mylm 1, eval = FALSE}
 model3 <- mylm(wages ~ sex + age + language + I(education^2), data = myframe)
 model3b <- mylm(wages ~ sex + age + language + I(education^2), data = myframe)
+model3
+model3b
 ```
 ```{r Test mylm 2, eval = FALSE}
 model4 <- mylm(wages ~ language + age + I(language * age), data = myframe)
 model4b <- mylm(wages ~ language + age + I(language * age), data = myframe)
+model4
+model4b
 ```
 ```{r Test mylm 3x, eval = FALSE}
 model5 <- mylm(wages ~ education - 1, data = myframe)
 model5b <- mylm(wages ~ education - 1, data = myframe)
+model5
+model5b
 ```
 Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
