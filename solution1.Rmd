@@ -82,5 +82,16 @@ model2 <- mylm(wages ~ education + age, data = myframe)
 ```
 
 # Part 4: Testing mylm 
-
+```{r Test mylm 1, eval = FALSE}
+model3 <- mylm(wages ~ sex + age + language + I(education^2), data = myframe)
+model3b <- mylm(wages ~ sex + age + language + I(education^2), data = myframe)
+```
+```{r Test mylm 2, eval = FALSE}
+model4 <- mylm(wages ~ language + age + I(language * age), data = myframe)
+model4b <- mylm(wages ~ language + age + I(language * age), data = myframe)
+```
+```{r Test mylm 3x, eval = FALSE}
+model5 <- mylm(wages ~ education - 1, data = myframe)
+model5b <- mylm(wages ~ education - 1, data = myframe)
+```
 Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
