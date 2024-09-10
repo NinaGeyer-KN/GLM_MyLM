@@ -61,12 +61,15 @@ summary.mylm(model1)
 summary(model1b)
 
 ```
+
 ### Plot 
-```{r linear regression plot, eval = FALSE, echo = FALSE}
+```{r linear regression plot, eval = TRUE, echo = FALSE}
 library(mylm)
+model1 <- mylm(wages ~ education, data = SLID)
 plot.mylm(model1)
 ```
-Comments: 
+
+### Comments: 
 - 
 
 ### ANOVA
@@ -75,16 +78,15 @@ Comments:
 -What is the relationship between the 𝜒2- and 𝑧-statistic in simple linear regression? Find the critical value(s) for both tests.
 ```{r linear regression anova, eval = FALSE, echo = FALSE}
 library(mylm)
+library(stringr)
+model1 <- mylm(wages ~ education, data = SLID)
 anova.mylm(model1)
 ```
-Comments: 
+
+### Comments: 
 - 
 
 # Part 3: Multiple Linear Regression 
-```{r MLR, eval = FALSE, echo = FALSE}
-library(mylm)
-model2 <- mylm(y ~ x1 + x2, data = myframe)
-```
 -What are the estimates and standard errors of the intercepts and regression coefficients for this model? 
 -Test the significance of the coefficients using a 𝑧-test.
 -What is the interpretation of the parameters?
@@ -92,10 +94,12 @@ model2 <- mylm(y ~ x1 + x2, data = myframe)
 ### Comparison simple linear regression and multiple linear regression 
 ```{r MLR vs simple linear, eval = FALSE, echo = FALSE}
 library(mylm)
-model1
+model1 <- mylm(wages ~ education, data = SLID)
+print(model1)
 model1c <- mylm(wages ~ age, data = myframe)
-
+print(model1c)
 model2 <- mylm(wages ~ education + age, data = myframe)
+print(model2)
 ```
 
 # Part 4: Testing mylm 
@@ -103,21 +107,21 @@ model2 <- mylm(wages ~ education + age, data = myframe)
 library(mylm)
 model3 <- mylm(wages ~ sex + age + language + I(education^2), data = myframe)
 model3b <- mylm(wages ~ sex + age + language + I(education^2), data = myframe)
-model3
-model3b
+print(model3)
+print(model3b)
 ```
 ```{r Test mylm 2, eval = FALSE, echo = FALSE}
 library(mylm)
 model4 <- mylm(wages ~ language + age + I(language * age), data = myframe)
 model4b <- mylm(wages ~ language + age + I(language * age), data = myframe)
-model4
-model4b
+print(model4)
+print(model4b)
 ```
 ```{r Test mylm 3x, eval = FALSE, echo = FALSE}
 library(mylm)
 model5 <- mylm(wages ~ education - 1, data = myframe)
 model5b <- mylm(wages ~ education - 1, data = myframe)
-model5
-model5b
+print(model5)
+print(model5b)
 ```
 Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
