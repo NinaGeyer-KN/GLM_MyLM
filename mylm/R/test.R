@@ -12,3 +12,4 @@ summary(mylm1)
 anova(mylm1)
 anova(lm1)
 
+

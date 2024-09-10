@@ -9,24 +9,37 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 ## Part 1: Explanatory analysis of the dataset
-###Diagnostics plots:
-```{r cars, eval = FALSE}
-install.packages("car")
+### Assumptions: 
+- linearity of covariate effects 
+- homescedasticity of error variance --> error variacnce same for different dependent variables 
+- uncorrelated error 
+- additivity of errors 
+
+### Diagnostics plots:
+
+```{r cars, eval = TRUE, echo=FALSE}
+#install.packages("car")
 library(car)
 library(GGally)
 data(SLID, package = "carData")
 SLID <- SLID[complete.cases(SLID), ]
 ggpairs(SLID)
 ```
+### Relations: 
+- medium strong (Cohen) , positive correlation between education and wages and age and wages --> good if we want to predict wages, bad if not, because then it shows multicollinearity 
+- weak (Cohen), negative correlation between age and education --> again good for prediction of one of them, but bad if not
+- there seems to be a small difference in wages between the sexes (males gaining more than females)
+- no difference in wages regarding the language level 
+- about same distribution of education and age regarding sex 
+
 ## Part 2:  Linear regression with the mylm package
 
 ### Questions:
-What are the estimates and standard errors of the intercept and regression coefficient for this model?
--
-What is the interpretation of the parameter estimates?
--
 
-```{r linear regression, eval = FALSE}
+What is the interpretation of the parameter estimates?
+- a
+
+```{r linear regression, eval = TRUE, echo = FALSE}
 #install.packages("car")
 #install.packages("mylm")
 library(mylm)
@@ -49,7 +62,8 @@ summary(model1b)
 
 ```
 ### Plot 
-```{r linear regression plot, eval = FALSE}
+```{r linear regression plot, eval = FALSE, echo = FALSE}
+library(mylm)
 plot.mylm(model1)
 ```
 Comments: 
@@ -59,14 +73,16 @@ Comments:
 -What is the residual sum of squares (SSE) and the degrees of freedom for this model?
 -What is total sum of squares (SST) for this model? Test the significance of the regression using a 𝜒2-test.
 -What is the relationship between the 𝜒2- and 𝑧-statistic in simple linear regression? Find the critical value(s) for both tests.
-```{r linear regression anova, eval = FALSE}
+```{r linear regression anova, eval = FALSE, echo = FALSE}
+library(mylm)
 anova.mylm(model1)
 ```
 Comments: 
 - 
 
 # Part 3: Multiple Linear Regression 
-```{r MLR, eval = FALSE}
+```{r MLR, eval = FALSE, echo = FALSE}
+library(mylm)
 model2 <- mylm(y ~ x1 + x2, data = myframe)
 ```
 -What are the estimates and standard errors of the intercepts and regression coefficients for this model? 
@@ -74,7 +90,8 @@ model2 <- mylm(y ~ x1 + x2, data = myframe)
 -What is the interpretation of the parameters?
 
 ### Comparison simple linear regression and multiple linear regression 
-```{r MLR, eval = FALSE}
+```{r MLR vs simple linear, eval = FALSE, echo = FALSE}
+library(mylm)
 model1
 model1c <- mylm(wages ~ age, data = myframe)
 
@@ -82,19 +99,22 @@ model2 <- mylm(wages ~ education + age, data = myframe)
 ```
 
 # Part 4: Testing mylm 
-```{r Test mylm 1, eval = FALSE}
+```{r Test mylm 1, eval = FALSE, echo = FALSE}
+library(mylm)
 model3 <- mylm(wages ~ sex + age + language + I(education^2), data = myframe)
 model3b <- mylm(wages ~ sex + age + language + I(education^2), data = myframe)
 model3
 model3b
 ```
-```{r Test mylm 2, eval = FALSE}
+```{r Test mylm 2, eval = FALSE, echo = FALSE}
+library(mylm)
 model4 <- mylm(wages ~ language + age + I(language * age), data = myframe)
 model4b <- mylm(wages ~ language + age + I(language * age), data = myframe)
 model4
 model4b
 ```
-```{r Test mylm 3x, eval = FALSE}
+```{r Test mylm 3x, eval = FALSE, echo = FALSE}
+library(mylm)
 model5 <- mylm(wages ~ education - 1, data = myframe)
 model5b <- mylm(wages ~ education - 1, data = myframe)
 model5
