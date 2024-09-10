@@ -37,7 +37,7 @@ mylm <- function(formula, data = list(), contrasts = NULL, ...){
   est$fitted_values <- fitted_values
   est$residuals <- residuals
 
-  est$dof_residuals <- nrow(X) - length(colnames(X))
+  est$dof_residuals <- nrow(X) - length(colnames(X)) - 1
   est$data_matrix <- X
   est$TSS <- TSS
 
@@ -308,6 +308,12 @@ anova.mylm <- function(object, ...){
       str_pad(round(residual_SumSq), max_width+3, 'right'),
       str_pad(round(residual_Mean_Sq), max_width+3, 'right'))
   cat('\nSignif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1\n')
+  cat('Total Sum SQ:', round(object$TSS), '\n')
+
+  # chi squared test
+  chi2_stat <- (object$TSS - residual_SumSq) / (residual_SumSq / object$dof_residuals)
+  p_value_chi2 <- 1 - pchisq(chi2_stat, df = object$rank - 1)
+  cat('Chi-statistic: ', format(chi2_stat,digits = 1, nsmall = 1), 'on', object$dof_residuals ,'DF, p-value:', format(p_value_chi2 ,digits = 1, nsmall = 3),'\n' )
 
   #return(model)
 

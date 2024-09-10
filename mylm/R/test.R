@@ -5,11 +5,12 @@ data(SLID, package = "carData")
 SLID <- SLID[complete.cases(SLID), ]
 
 lm1 = lm(wages ~ education + age, SLID)
-mylm1 = mylm(wages ~ education + age, SLID)
+mylm1 = mylm(wages ~ education , SLID)
 mylm(wages ~ education + age, SLID)
 summary(lm1)
 summary(mylm1)
 anova(mylm1)
 anova(lm1)
+plot(lm1)
 
 
