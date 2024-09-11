@@ -1,8 +1,9 @@
+
 ---
 title: "solution_1"
 output:
-  html_document: default
   pdf_document: default
+  html_document: default
 date: "2024-09-02"
 ---
 
@@ -80,8 +81,8 @@ plot.mylm(model1)
 
 ### ANOVA
 -What is the residual sum of squares (SSE) and the degrees of freedom for this model? See output.
--What is total sum of squares (SST) for this model? Test the significance of the regression using a 𝜒2-test. 23096 (Sum Sq education) + 223694 (sum sq residuals) = 246790. 
--What is the relationship between the 𝜒2- and 𝑧-statistic in simple linear regression? Find the critical value(s) for both tests. As there is only one beta to test in simple linear regression the chi^2 for the whole model should be the squared z statistic for education, which is true for our values Chi^2 = 411 and z = 20.284 (20.284^2 = 411.44).
+-What is total sum of squares (SST) for this model? Test the significance of the regression using a $\chi^2$-test. 23096 (Sum Sq education) + 223694 (sum sq residuals) = 246790. 
+-What is the relationship between the $\chi^2$- and $z$-statistic in simple linear regression? Find the critical value(s) for both tests. As there is only one beta to test in simple linear regression the $\chi^2$ for the whole model should be the squared z statistic for education, which is true for our values $\chi^2$ = 411 and z = 20.284 (20.284^2 = 411.44).
 ```{r linear regression anova, eval = TRUE}
 library(mylm)
 library(stringr)
@@ -90,11 +91,11 @@ anova.mylm(model1)
 ```
 
 ### Comments: 
-- The covariate education gets a significant chi^2 value which means there is a high probability that it explains variance of the dependent variable. 
+- The covariate education gets a significant $\chi^2$ value which means there is a high probability that it explains variance of the dependent variable. 
 
 # Part 3: Multiple Linear Regression 
 -What are the estimates and standard errors of the intercepts and regression coefficients for this model? 
--Test the significance of the coefficients using a 𝑧-test.
+-Test the significance of the coefficients using a $z$-test.
 -What is the interpretation of the parameters?
 
 ```{r multiple linear regression anova, eval = TRUE}
@@ -136,7 +137,7 @@ plot.mylm(model3)
 
 ```
 
-That sex/ gender has a significant influence on the wages as well as age. Language has no significant effect and the squared education has an effect but a really small one. The model explains about 30% of the variance. We could leave out the language because it is unnecessary.
+That sex/gender has a significant influence on the wages as well as age. Language has no significant effect and the squared education has an effect but a really small one. The model explains about 30% of the variance. We could leave out the language because it is unnecessary.
 
 ```{r Test mylm 2, eval = TRUE, echo = FALSE}
 library(mylm)
