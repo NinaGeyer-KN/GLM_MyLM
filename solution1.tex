@@ -1,0 +1,1003 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={solution\_1},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{solution\_1}
+\author{}
+\date{\vspace{-2.5em}2024-09-02}
+
+\begin{document}
+\maketitle
+
+\hypertarget{names}{%
+\subsection{Names:}\label{names}}
+
+13 Nina Geyer
+
+\hypertarget{part-1-explanatory-analysis-of-the-dataset}{%
+\subsection{Part 1: Explanatory analysis of the
+dataset}\label{part-1-explanatory-analysis-of-the-dataset}}
+
+\hypertarget{assumptions}{%
+\subsubsection{Assumptions:}\label{assumptions}}
+
+\begin{itemize}
+\tightlist
+\item
+  linearity of covariate effects
+\item
+  homescedasticity of error variance --\textgreater{} error variacnce
+  same for different dependent variables
+\item
+  uncorrelated error
+\item
+  additivity of errors
+\end{itemize}
+
+\hypertarget{diagnostics-plots}{%
+\subsubsection{Diagnostics plots:}\label{diagnostics-plots}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#install.packages("car")}
+\FunctionTok{library}\NormalTok{(car)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Loading required package: carData
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(GGally)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Loading required package: ggplot2
+\end{verbatim}
+
+\begin{verbatim}
+## Registered S3 method overwritten by 'GGally':
+##   method from   
+##   +.gg   ggplot2
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{data}\NormalTok{(SLID, }\AttributeTok{package =} \StringTok{"carData"}\NormalTok{)}
+\NormalTok{SLID }\OtherTok{\textless{}{-}}\NormalTok{ SLID[}\FunctionTok{complete.cases}\NormalTok{(SLID), ]}
+\FunctionTok{ggpairs}\NormalTok{(SLID)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+\end{verbatim}
+
+\begin{verbatim}
+## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+\end{verbatim}
+
+\includegraphics{solution1_files/figure-latex/cars-1.pdf} \#\#\#
+Relations: - medium strong (Cohen) , positive correlation between
+education and wages and age and wages --\textgreater{} good if we want
+to predict wages, bad if not, because then it shows multicollinearity -
+weak (Cohen), negative correlation between age and education
+--\textgreater{} again good for prediction of one of them, but bad if
+not - there seems to be a small difference in wages between the sexes
+(males gaining more than females) - no difference in wages regarding the
+language level - about same distribution of education and age regarding
+sex
+
+\hypertarget{part-2-linear-regression-with-the-mylm-package}{%
+\subsection{Part 2: Linear regression with the mylm
+package}\label{part-2-linear-regression-with-the-mylm-package}}
+
+\hypertarget{questions}{%
+\subsubsection{Questions:}\label{questions}}
+
+What is the interpretation of the parameter estimates? - The parameter
+estimation shows the influence or strength of influence of the covariate
+on the dependent variable. - The z- and p-values show if this effect in
+the linear regression is significant or not, so if it would show as
+well, if we would repeat the experiment. - The intercept shows the value
+of the dependent varaible if all covariatees are 0.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#install.packages("car")}
+\CommentTok{\#install.packages("mylm")}
+\FunctionTok{library}\NormalTok{(mylm)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Attaching package: 'mylm'
+\end{verbatim}
+
+\begin{verbatim}
+## The following object is masked from 'package:carData':
+## 
+##     SLID
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(car)}
+\FunctionTok{library}\NormalTok{(GGally)}
+\FunctionTok{library}\NormalTok{(stringr)}
+\FunctionTok{data}\NormalTok{(SLID, }\AttributeTok{package =} \StringTok{"carData"}\NormalTok{)}
+\NormalTok{SLID }\OtherTok{\textless{}{-}}\NormalTok{ SLID[}\FunctionTok{complete.cases}\NormalTok{(SLID), ]}
+
+\CommentTok{\# comparison simple model}
+\NormalTok{model1 }\OtherTok{\textless{}{-}} \FunctionTok{mylm}\NormalTok{(wages }\SpecialCharTok{\textasciitilde{}}\NormalTok{ education, }\AttributeTok{data =}\NormalTok{ SLID)}
+\NormalTok{model1b }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(wages }\SpecialCharTok{\textasciitilde{}}\NormalTok{ education, }\AttributeTok{data =}\NormalTok{ SLID)}
+
+\CommentTok{\# print}
+\FunctionTok{print.mylm}\NormalTok{(model1)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Call:
+## mylm(formula = wages ~ education, data = SLID)
+## 
+## Coefficients:
+## (Intercept) : 4.9717 
+## education : 0.7923
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# summary }
+\FunctionTok{summary.mylm}\NormalTok{(model1)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Call:
+## mylm(formula = wages ~ education, data = SLID)
+## 
+## Residuals:
+## Min       1Q        Median    3Q        Max       
+## -17.688   -5.822    -1.039    4.148     34.190    
+## 
+## Coefficients:
+##               Estimate     Std. Error   z value      Pr(>|z|)     
+## (Intercept)   4.971691     0.5344       9.3040       0.0000 ***   
+## education     0.7923091    0.0391       20.2816      0.0000 ***   
+## 
+## Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+## Residual standard error:  7.493 on  3984 degrees of freedom 
+## Multiple R-squared:  0.09359 ,  Adjusted R-squared:  0.09313 
+## F-statistic:  411.3 on 1 and 3984 DF, p-value: 0.000
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{summary}\NormalTok{(model1b)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = wages ~ education, data = SLID)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -17.688  -5.822  -1.039   4.148  34.190 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(>|t|)    
+## (Intercept)  4.97169    0.53429   9.305   <2e-16 ***
+## education    0.79231    0.03906  20.284   <2e-16 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 7.492 on 3985 degrees of freedom
+## Multiple R-squared:  0.09359,    Adjusted R-squared:  0.09336 
+## F-statistic: 411.4 on 1 and 3985 DF,  p-value: < 2.2e-16
+\end{verbatim}
+
+\hypertarget{plot}{%
+\subsubsection{Plot}\label{plot}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(mylm)}
+\NormalTok{model1 }\OtherTok{\textless{}{-}} \FunctionTok{mylm}\NormalTok{(wages }\SpecialCharTok{\textasciitilde{}}\NormalTok{ education, }\AttributeTok{data =}\NormalTok{ SLID)}
+\FunctionTok{plot.mylm}\NormalTok{(model1)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{solution1_files/figure-latex/linear regression plot-1.pdf}
+
+\hypertarget{comments}{%
+\subsubsection{Comments:}\label{comments}}
+
+\begin{itemize}
+\tightlist
+\item
+  Heteroscadicity, so for larger fitted values the prediction gets less
+  precise and the errors are more widely spread --\textgreater{} This
+  indicates that there might be an error in the way the covariates are
+  modelled.
+\item
+  We have only little data for the higher values of wages, so this might
+  make the prediction harder as there is less to fit/ learn from.
+\item
+  Also, the distribution for the positive residuals has a higher
+  variance than for the negative one.
+\end{itemize}
+
+\hypertarget{anova}{%
+\subsubsection{ANOVA}\label{anova}}
+
+-What is the residual sum of squares (SSE) and the degrees of freedom
+for this model? See output. -What is total sum of squares (SST) for this
+model? Test the significance of the regression using a \(\chi^2\)-test.
+23096 (Sum Sq education) + 223694 (sum sq residuals) = 246790. -What is
+the relationship between the \(\chi^2\)- and \(z\)-statistic in simple
+linear regression? Find the critical value(s) for both tests. As there
+is only one beta to test in simple linear regression the \(\chi^2\) for
+the whole model should be the squared z statistic for education, which
+is true for our values \(\chi^2\) = 411 and z = 20.284 (20.284\^{}2 =
+411.44).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(mylm)}
+\FunctionTok{library}\NormalTok{(stringr)}
+\NormalTok{model1 }\OtherTok{\textless{}{-}} \FunctionTok{mylm}\NormalTok{(wages }\SpecialCharTok{\textasciitilde{}}\NormalTok{ education, }\AttributeTok{data =}\NormalTok{ SLID)}
+\FunctionTok{anova.mylm}\NormalTok{(model1)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "wages~"
+## Analysis of Variance Table
+## Response: wages
+##               Df         Sum Sq     Mean Sq    Chi^2      Pr(>Chi^2) 
+## education     1          23096      23096      411.447    0 ***      
+## Residuals     3984       223694     56        
+## Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+## Total Sum SQ: 246790 
+## Chi-statistic:  411.3 on 3984 DF, p-value: 0.000
+\end{verbatim}
+
+\hypertarget{comments-1}{%
+\subsubsection{Comments:}\label{comments-1}}
+
+\begin{itemize}
+\tightlist
+\item
+  The covariate education gets a significant \(\chi^2\) value which
+  means there is a high probability that it explains variance of the
+  dependent variable.
+\end{itemize}
+
+\hypertarget{part-3-multiple-linear-regression}{%
+\section{Part 3: Multiple Linear
+Regression}\label{part-3-multiple-linear-regression}}
+
+-What are the estimates and standard errors of the intercepts and
+regression coefficients for this model? -Test the significance of the
+coefficients using a \(z\)-test. -What is the interpretation of the
+parameters?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(mylm)}
+\FunctionTok{library}\NormalTok{(stringr)}
+\NormalTok{model1d }\OtherTok{\textless{}{-}} \FunctionTok{mylm}\NormalTok{(wages }\SpecialCharTok{\textasciitilde{}}\NormalTok{ education }\SpecialCharTok{+}\NormalTok{ age, }\AttributeTok{data =}\NormalTok{ SLID)}
+\FunctionTok{summary.mylm}\NormalTok{(model1d)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Call:
+## mylm(formula = wages ~ education + age, data = SLID)
+## 
+## Residuals:
+## Min       1Q        Median    3Q        Max       
+## -24.303   -4.495    -0.807    3.674     37.628    
+## 
+## Coefficients:
+##               Estimate     Std. Error   z value      Pr(>|z|)     
+## (Intercept)   -6.021653    0.6190       -9.7280      0.0000 ***   
+## education     0.9014644    0.0358       25.2057      0.0000 ***   
+## age           0.2570898    0.0090       28.7176      0.0000 ***   
+## 
+## Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+## Residual standard error:  6.821 on  3983 degrees of freedom 
+## Multiple R-squared:  0.2491 ,  Adjusted R-squared:  0.2485 
+## F-statistic:  660.5 on 2 and 3983 DF, p-value: 0.000
+\end{verbatim}
+
+What is the interpretation of the parameters? - The intercept is
+negative, probably because all data points (persons) have an age higher
+than 0. - Education seems to have a higher influence than age as the
+parameter estimate is higher. - Both parameters are significant, so
+should have an influence on wages.
+
+\hypertarget{comparison-simple-linear-regression-and-multiple-linear-regression}{%
+\subsubsection{Comparison simple linear regression and multiple linear
+regression}\label{comparison-simple-linear-regression-and-multiple-linear-regression}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(mylm)}
+\NormalTok{model1 }\OtherTok{\textless{}{-}} \FunctionTok{mylm}\NormalTok{(wages }\SpecialCharTok{\textasciitilde{}}\NormalTok{ education, }\AttributeTok{data =}\NormalTok{ SLID)}
+\FunctionTok{summary.mylm}\NormalTok{(model1)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Call:
+## mylm(formula = wages ~ education, data = SLID)
+## 
+## Residuals:
+## Min       1Q        Median    3Q        Max       
+## -17.688   -5.822    -1.039    4.148     34.190    
+## 
+## Coefficients:
+##               Estimate     Std. Error   z value      Pr(>|z|)     
+## (Intercept)   4.971691     0.5344       9.3040       0.0000 ***   
+## education     0.7923091    0.0391       20.2816      0.0000 ***   
+## 
+## Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+## Residual standard error:  7.493 on  3984 degrees of freedom 
+## Multiple R-squared:  0.09359 ,  Adjusted R-squared:  0.09313 
+## F-statistic:  411.3 on 1 and 3984 DF, p-value: 0.000
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{model1c }\OtherTok{\textless{}{-}} \FunctionTok{mylm}\NormalTok{(wages }\SpecialCharTok{\textasciitilde{}}\NormalTok{ age , }\AttributeTok{data =}\NormalTok{ SLID)}
+\FunctionTok{summary.mylm}\NormalTok{(model1c)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Call:
+## mylm(formula = wages ~ age, data = SLID)
+## 
+## Residuals:
+## Min       1Q        Median    3Q        Max       
+## -17.747   -4.847    -1.507    3.914     35.063    
+## 
+## Coefficients:
+##               Estimate     Std. Error   z value      Pr(>|z|)     
+## (Intercept)   6.890901     0.3741       18.4202      0.0000 ***   
+## age           0.2331079    0.0096       24.3222      0.0000 ***   
+## 
+## Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+## Residual standard error:  7.344 on  3984 degrees of freedom 
+## Multiple R-squared:  0.1293 ,  Adjusted R-squared:  0.1289 
+## F-statistic:  591.6 on 1 and 3984 DF, p-value: 0.000
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{model2 }\OtherTok{\textless{}{-}} \FunctionTok{mylm}\NormalTok{(wages }\SpecialCharTok{\textasciitilde{}}\NormalTok{ education }\SpecialCharTok{+}\NormalTok{ age, }\AttributeTok{data =}\NormalTok{ SLID)}
+\FunctionTok{summary.mylm}\NormalTok{(model2)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Call:
+## mylm(formula = wages ~ education + age, data = SLID)
+## 
+## Residuals:
+## Min       1Q        Median    3Q        Max       
+## -24.303   -4.495    -0.807    3.674     37.628    
+## 
+## Coefficients:
+##               Estimate     Std. Error   z value      Pr(>|z|)     
+## (Intercept)   -6.021653    0.6190       -9.7280      0.0000 ***   
+## education     0.9014644    0.0358       25.2057      0.0000 ***   
+## age           0.2570898    0.0090       28.7176      0.0000 ***   
+## 
+## Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+## Residual standard error:  6.821 on  3983 degrees of freedom 
+## Multiple R-squared:  0.2491 ,  Adjusted R-squared:  0.2485 
+## F-statistic:  660.5 on 2 and 3983 DF, p-value: 0.000
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{test }\OtherTok{\textless{}{-}} \FunctionTok{mylm}\NormalTok{(age }\SpecialCharTok{\textasciitilde{}}\NormalTok{ education, }\AttributeTok{data =}\NormalTok{ SLID)}
+\FunctionTok{summary.mylm}\NormalTok{(test)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Call:
+## mylm(formula = age ~ education, data = SLID)
+## 
+## Residuals:
+## Min        1Q         Median     3Q         Max        
+## -25.9116   -8.9982    -0.6658    8.9097     33.8817    
+## 
+## Coefficients:
+##               Estimate      Std. Error    z value       Pr(>|z|)      
+## (Intercept)   42.76072      0.8609        49.6726       0.0000 ***    
+## education     -0.4245804    0.0629        -6.7464       2e-11 ***     
+## 
+## Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+## Residual standard error:  12.07 on  3984 degrees of freedom 
+## Multiple R-squared:  0.0113 ,  Adjusted R-squared:  0.0108 
+## F-statistic:  45.5 on 1 and 3984 DF, p-value: 2e-11
+\end{verbatim}
+
+Why (and when) does the parameter estimates found (the two simple and
+the one multiple) differ? - They should not differ, if the covariates so
+age and education are independent (no correlation). - They differ
+because age and education are correlated. Explain/show how you can use
+mylm to find these values. --\textgreater{} Use the function on the
+model.
+
+\hypertarget{part-4-testing-mylm}{%
+\section{Part 4: Testing mylm}\label{part-4-testing-mylm}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(mylm)}
+\NormalTok{model3 }\OtherTok{\textless{}{-}} \FunctionTok{mylm}\NormalTok{(wages }\SpecialCharTok{\textasciitilde{}}\NormalTok{ sex }\SpecialCharTok{+}\NormalTok{ age }\SpecialCharTok{+}\NormalTok{ language }\SpecialCharTok{+} \FunctionTok{I}\NormalTok{(education}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{), }\AttributeTok{data =}\NormalTok{ SLID)}
+\FunctionTok{summary.mylm}\NormalTok{(model3)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Call:
+## mylm(formula = wages ~ sex + age + language + I(education^2), 
+##     data = SLID)
+## 
+## Residuals:
+## Min        1Q         Median     3Q         Max        
+## -27.1712   -4.2762    -0.7631    3.2176     35.9289    
+## 
+## Coefficients:
+##                  Estimate       Std. Error     z value        Pr(>|z|)       
+## (Intercept)      -1.875531      0.4404         -4.2587        2e-05 ***      
+## sexMale          3.4087         0.2084         16.3529        0.0000 ***     
+## age              0.248625       0.0087         28.6973        0.0000 ***     
+## languageFrench   -0.07553202    0.4252         -0.1776        0.8590         
+## languageOther    -0.1345402     0.3232         -0.4163        0.6772         
+## I(education^2)   0.03481515     0.0013         26.9873        0.0000 ***     
+## 
+## Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+## Residual standard error:  6.578 on  3980 degrees of freedom 
+## Multiple R-squared:  0.3022 ,  Adjusted R-squared:  0.3012 
+## F-statistic:  344.8 on 5 and 3980 DF, p-value: 0.000
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{plot.mylm}\NormalTok{(model3)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{solution1_files/figure-latex/Test mylm 1-1.pdf}
+
+That sex/gender has a significant influence on the wages as well as age.
+Language has no significant effect and the squared education has an
+effect but a really small one. The model explains about 30\% of the
+variance. We could leave out the language because it is unnecessary.
+
+\begin{verbatim}
+## Call:
+## mylm(formula = wages ~ language + age + language * age, data = SLID)
+## 
+## Residuals:
+## Min       1Q        Median    3Q        Max       
+## -16.751   -4.832    -1.412    3.938     35.187    
+## 
+## Coefficients:
+##                      Estimate       Std. Error     z value        Pr(>|z|)       
+## (Intercept)          6.555794       0.4107         15.9612        0.0000 ***     
+## languageFrench       2.860625       1.5963         1.7921         0.0731 .       
+## languageOther        0.8486213      1.2353         0.6870         0.4921         
+## age                  0.2448516      0.0107         22.9072        0.0000 ***     
+## languageFrench:age   -0.08392752    0.0405         -2.0743        0.0381 *       
+## languageOther:age    -0.03701381    0.0293         -1.2614        0.2072         
+## 
+## Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+## Residual standard error:  7.34 on  3980 degrees of freedom 
+## Multiple R-squared:  0.1312 ,  Adjusted R-squared:  0.1299 
+## F-statistic:  120.2 on 5 and 3980 DF, p-value: 0.000
+\end{verbatim}
+
+\includegraphics{solution1_files/figure-latex/Test mylm 2-1.pdf}
+
+Language is still insignificant, age has an effect on wages. Also the
+interaction of languageFrench and age is significant. But the
+interaction term has only a small estimate. The model explains about
+13\% of the variance. In this model, I probably would add sex again,
+because it seems to explain a large proportion of variance.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(mylm)}
+\NormalTok{model5 }\OtherTok{\textless{}{-}} \FunctionTok{mylm}\NormalTok{(wages }\SpecialCharTok{\textasciitilde{}}\NormalTok{ education }\SpecialCharTok{{-}} \DecValTok{1}\NormalTok{, }\AttributeTok{data =}\NormalTok{ SLID)}
+\FunctionTok{summary.mylm}\NormalTok{(model5)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Call:
+## mylm(formula = wages ~ education - 1, data = SLID)
+## 
+## Residuals:
+## Min        1Q         Median     3Q         Max        
+## -19.8039   -5.3421    -0.6624    4.4646     36.3264    
+## 
+## Coefficients:
+##             Estimate    Std. Error  z value     Pr(>|z|)    
+## education   1.146697    0.0088      130.7776    0.0000 ***
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in pf(F_stat, df1 = object$rank - 1, df2 = object$dof_residuals): NaNs
+## produced
+\end{verbatim}
+
+\begin{verbatim}
+## 
+## Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+## Residual standard error:  7.573 on  3985 degrees of freedom 
+## Multiple R-squared:  0.07389 ,  Adjusted R-squared:  0.07366 
+## F-statistic:  Inf on 0 and 3985 DF, p-value: NaN
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{plot.mylm}\NormalTok{(model5)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{solution1_files/figure-latex/Test mylm 3x-1.pdf}
+
+As there is no intercept the for a education of zero there is also a
+wage of zero now. The parameter for education is greater than with the
+intercept, as it has to compensate for the missing intercept. Also, the
+R\^{}2 is smaller. We would recommend adding the intercept.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Select Build, Build and reload to build and lode into the R{-}session.}
+
+\FunctionTok{library}\NormalTok{(stringr)}
+
+\NormalTok{mylm }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(formula, }\AttributeTok{data =} \FunctionTok{list}\NormalTok{(), }\AttributeTok{contrasts =} \ConstantTok{NULL}\NormalTok{, ...)\{}
+  \CommentTok{\# Extract model matrix \& responses}
+\NormalTok{  mf }\OtherTok{\textless{}{-}} \FunctionTok{model.frame}\NormalTok{(}\AttributeTok{formula =}\NormalTok{ formula, }\AttributeTok{data =}\NormalTok{ data)}
+\NormalTok{  X  }\OtherTok{\textless{}{-}} \FunctionTok{model.matrix}\NormalTok{(}\FunctionTok{attr}\NormalTok{(mf, }\StringTok{"terms"}\NormalTok{), }\AttributeTok{data =}\NormalTok{ mf, }\AttributeTok{contrasts.arg =}\NormalTok{ contrasts)}
+\NormalTok{  y  }\OtherTok{\textless{}{-}} \FunctionTok{model.response}\NormalTok{(mf)}
+\NormalTok{  terms }\OtherTok{\textless{}{-}} \FunctionTok{attr}\NormalTok{(mf, }\StringTok{"terms"}\NormalTok{)}
+
+
+  \CommentTok{\# Add code here to calculate coefficients, residuals, fitted values, etc...}
+  \CommentTok{\# coefficients}
+\NormalTok{  coeff }\OtherTok{\textless{}{-}} \FunctionTok{solve}\NormalTok{(}\FunctionTok{t}\NormalTok{(X) }\SpecialCharTok{\%*\%}\NormalTok{ X) }\SpecialCharTok{\%*\%} \FunctionTok{t}\NormalTok{(X) }\SpecialCharTok{\%*\%}\NormalTok{ y}
+\NormalTok{  coeff\_list }\OtherTok{\textless{}{-}} \FunctionTok{as.list}\NormalTok{(coeff[,}\DecValTok{1}\NormalTok{])}
+
+  \CommentTok{\# Assign names to coefficients}
+  \FunctionTok{names}\NormalTok{(coeff\_list) }\OtherTok{\textless{}{-}} \FunctionTok{colnames}\NormalTok{(X)}
+
+  \CommentTok{\# fitted values}
+\NormalTok{  fitted\_values }\OtherTok{\textless{}{-}}\NormalTok{ X }\SpecialCharTok{\%*\%}\NormalTok{ coeff}
+  \CommentTok{\#residuals}
+\NormalTok{  residuals }\OtherTok{\textless{}{-}}\NormalTok{ y }\SpecialCharTok{{-}}\NormalTok{ fitted\_values}
+
+
+\NormalTok{  TSS }\OtherTok{\textless{}{-}} \FunctionTok{sum}\NormalTok{((y}\SpecialCharTok{{-}}\FunctionTok{mean}\NormalTok{(y))}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{)}
+
+  \CommentTok{\# and store the results in the list est}
+\NormalTok{  est }\OtherTok{\textless{}{-}} \FunctionTok{list}\NormalTok{(}\AttributeTok{terms =}\NormalTok{ terms, }\AttributeTok{model =}\NormalTok{ mf)}
+
+  \CommentTok{\# Store call and formula used}
+\NormalTok{  est}\SpecialCharTok{$}\NormalTok{call }\OtherTok{\textless{}{-}} \FunctionTok{match.call}\NormalTok{()}
+\NormalTok{  est}\SpecialCharTok{$}\NormalTok{formula }\OtherTok{\textless{}{-}}\NormalTok{ formula}
+\NormalTok{  est}\SpecialCharTok{$}\NormalTok{coeff }\OtherTok{\textless{}{-}}\NormalTok{ coeff\_list}
+\NormalTok{  est}\SpecialCharTok{$}\NormalTok{rank }\OtherTok{\textless{}{-}} \FunctionTok{length}\NormalTok{(}\FunctionTok{colnames}\NormalTok{(X))}
+\NormalTok{  est}\SpecialCharTok{$}\NormalTok{fitted\_values }\OtherTok{\textless{}{-}}\NormalTok{ fitted\_values}
+\NormalTok{  est}\SpecialCharTok{$}\NormalTok{residuals }\OtherTok{\textless{}{-}}\NormalTok{ residuals}
+
+\NormalTok{  est}\SpecialCharTok{$}\NormalTok{dof\_residuals }\OtherTok{\textless{}{-}} \FunctionTok{nrow}\NormalTok{(X) }\SpecialCharTok{{-}} \FunctionTok{length}\NormalTok{(}\FunctionTok{colnames}\NormalTok{(X)) }\SpecialCharTok{{-}} \DecValTok{1}
+\NormalTok{  est}\SpecialCharTok{$}\NormalTok{data\_matrix }\OtherTok{\textless{}{-}}\NormalTok{ X}
+\NormalTok{  est}\SpecialCharTok{$}\NormalTok{TSS }\OtherTok{\textless{}{-}}\NormalTok{ TSS}
+
+
+  \CommentTok{\# Set class name. This is very important!}
+  \FunctionTok{class}\NormalTok{(est) }\OtherTok{\textless{}{-}} \StringTok{\textquotesingle{}mylm\textquotesingle{}}
+
+  \CommentTok{\# Return the object with all results}
+  \FunctionTok{return}\NormalTok{(est)}
+\NormalTok{\}}
+
+\NormalTok{print.mylm }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(object, ...)\{}
+  \CommentTok{\# Code here is used when print(object) is used on objects of class "mylm"}
+  \CommentTok{\# Useful functions include cat, print.default and format}
+\NormalTok{  variable\_names }\OtherTok{=} \FunctionTok{all.vars}\NormalTok{(object}\SpecialCharTok{$}\NormalTok{formula)}
+
+  \FunctionTok{cat}\NormalTok{(}\StringTok{\textquotesingle{}Call:}\SpecialCharTok{\textbackslash{}n}\StringTok{\textquotesingle{}}\NormalTok{)}
+  \FunctionTok{print}\NormalTok{(object}\SpecialCharTok{$}\NormalTok{call)}
+  \FunctionTok{cat}\NormalTok{(}\StringTok{\textquotesingle{}}\SpecialCharTok{\textbackslash{}n}\StringTok{Coefficients:}\SpecialCharTok{\textbackslash{}n}\StringTok{\textquotesingle{}}\NormalTok{)}
+  \ControlFlowTok{for}\NormalTok{ (name }\ControlFlowTok{in} \FunctionTok{names}\NormalTok{(object}\SpecialCharTok{$}\NormalTok{coeff)) \{}
+    \FunctionTok{cat}\NormalTok{(name, }\StringTok{\textquotesingle{}: \textquotesingle{}}\NormalTok{)}
+    \FunctionTok{cat}\NormalTok{(}\FunctionTok{format}\NormalTok{(object}\SpecialCharTok{$}\NormalTok{coeff[[name]], }\AttributeTok{digits =} \DecValTok{4}\NormalTok{, }\AttributeTok{nsmall =} \DecValTok{4}\NormalTok{), }\StringTok{\textquotesingle{}}\SpecialCharTok{\textbackslash{}n}\StringTok{\textquotesingle{}}\NormalTok{)}
+\NormalTok{  \}}
+\NormalTok{\}}
+
+\NormalTok{summary.mylm }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(object, ...)\{}
+  \CommentTok{\# Code here is used when summary(object) is used on objects of class "mylm"}
+  \CommentTok{\# Useful functions include cat, print.default and format}
+
+  \CommentTok{\#}
+\NormalTok{  X }\OtherTok{\textless{}{-}}\NormalTok{ object}\SpecialCharTok{$}\NormalTok{data\_matrix}
+\NormalTok{  RSS }\OtherTok{\textless{}{-}} \FunctionTok{sum}\NormalTok{(object}\SpecialCharTok{$}\NormalTok{residuals}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{)}
+\NormalTok{  sigma2 }\OtherTok{\textless{}{-}}\NormalTok{ RSS}\SpecialCharTok{/}\NormalTok{object}\SpecialCharTok{$}\NormalTok{dof\_residuals}
+\NormalTok{  XtX\_inv }\OtherTok{\textless{}{-}} \FunctionTok{solve}\NormalTok{(}\FunctionTok{t}\NormalTok{(X)}\SpecialCharTok{\%*\%}\NormalTok{X)}
+\NormalTok{  cov\_matrix }\OtherTok{\textless{}{-}}\NormalTok{ sigma2}\SpecialCharTok{*}\NormalTok{XtX\_inv}
+\NormalTok{  stderr }\OtherTok{\textless{}{-}} \FunctionTok{sqrt}\NormalTok{(}\FunctionTok{diag}\NormalTok{(cov\_matrix))}
+
+
+  \CommentTok{\# z and p values}
+\NormalTok{  z }\OtherTok{\textless{}{-}} \FunctionTok{as.numeric}\NormalTok{(object}\SpecialCharTok{$}\NormalTok{coeff) }\SpecialCharTok{/} \FunctionTok{as.numeric}\NormalTok{(stderr)}
+\NormalTok{  p }\OtherTok{\textless{}{-}} \DecValTok{2} \SpecialCharTok{*}\NormalTok{ (}\DecValTok{1} \SpecialCharTok{{-}} \FunctionTok{pnorm}\NormalTok{(}\FunctionTok{abs}\NormalTok{(z)))}
+
+  \CommentTok{\# significance levels}
+\NormalTok{  sig\_level }\OtherTok{\textless{}{-}} \FunctionTok{list}\NormalTok{()}
+  \ControlFlowTok{for}\NormalTok{ (value }\ControlFlowTok{in}\NormalTok{ p) \{}
+    \CommentTok{\# Determine the significance level and append to the list}
+    \ControlFlowTok{if}\NormalTok{ (value }\SpecialCharTok{\textless{}} \FloatTok{0.001}\NormalTok{) \{}
+\NormalTok{      sig\_level[[}\FunctionTok{length}\NormalTok{(sig\_level) }\SpecialCharTok{+} \DecValTok{1}\NormalTok{]] }\OtherTok{\textless{}{-}} \StringTok{\textquotesingle{}***\textquotesingle{}}
+\NormalTok{    \} }\ControlFlowTok{else} \ControlFlowTok{if}\NormalTok{ (value }\SpecialCharTok{\textless{}} \FloatTok{0.01}\NormalTok{) \{}
+\NormalTok{      sig\_level[[}\FunctionTok{length}\NormalTok{(sig\_level) }\SpecialCharTok{+} \DecValTok{1}\NormalTok{]] }\OtherTok{\textless{}{-}} \StringTok{\textquotesingle{}**\textquotesingle{}}
+\NormalTok{    \} }\ControlFlowTok{else} \ControlFlowTok{if}\NormalTok{ (value }\SpecialCharTok{\textless{}} \FloatTok{0.05}\NormalTok{) \{}
+\NormalTok{      sig\_level[[}\FunctionTok{length}\NormalTok{(sig\_level) }\SpecialCharTok{+} \DecValTok{1}\NormalTok{]] }\OtherTok{\textless{}{-}} \StringTok{\textquotesingle{}*\textquotesingle{}}
+\NormalTok{    \} }\ControlFlowTok{else} \ControlFlowTok{if}\NormalTok{ (value }\SpecialCharTok{\textless{}} \FloatTok{0.1}\NormalTok{) \{}
+\NormalTok{      sig\_level[[}\FunctionTok{length}\NormalTok{(sig\_level) }\SpecialCharTok{+} \DecValTok{1}\NormalTok{]] }\OtherTok{\textless{}{-}} \StringTok{\textquotesingle{}.\textquotesingle{}}
+\NormalTok{    \} }\ControlFlowTok{else}\NormalTok{ \{}
+\NormalTok{      sig\_level[[}\FunctionTok{length}\NormalTok{(sig\_level) }\SpecialCharTok{+} \DecValTok{1}\NormalTok{]] }\OtherTok{\textless{}{-}} \StringTok{\textquotesingle{} \textquotesingle{}}
+\NormalTok{    \}}
+\NormalTok{  \}}
+
+
+  \DocumentationTok{\#\# Call}
+  \FunctionTok{cat}\NormalTok{(}\StringTok{\textquotesingle{}Call:}\SpecialCharTok{\textbackslash{}n}\StringTok{\textquotesingle{}}\NormalTok{)}
+  \FunctionTok{print}\NormalTok{(object}\SpecialCharTok{$}\NormalTok{call)}
+
+  \DocumentationTok{\#\# Residuals}
+  \CommentTok{\# set up values}
+\NormalTok{  summary\_residuals }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}
+    \AttributeTok{Min =} \FunctionTok{min}\NormalTok{(object}\SpecialCharTok{$}\NormalTok{residuals),}
+    \AttributeTok{Q1 =} \FunctionTok{quantile}\NormalTok{(object}\SpecialCharTok{$}\NormalTok{residuals, }\FloatTok{0.25}\NormalTok{),}
+    \AttributeTok{Median =} \FunctionTok{median}\NormalTok{(object}\SpecialCharTok{$}\NormalTok{residuals),}
+    \AttributeTok{Q3 =} \FunctionTok{quantile}\NormalTok{(object}\SpecialCharTok{$}\NormalTok{residuals, }\FloatTok{0.75}\NormalTok{),}
+    \AttributeTok{Max =} \FunctionTok{max}\NormalTok{(object}\SpecialCharTok{$}\NormalTok{residuals)}
+\NormalTok{  )}
+\NormalTok{  formatted\_residuals }\OtherTok{\textless{}{-}} \FunctionTok{format}\NormalTok{(summary\_residuals, }\AttributeTok{digits =} \DecValTok{4}\NormalTok{, }\AttributeTok{nsmall =} \DecValTok{3}\NormalTok{,}\AttributeTok{justify =} \StringTok{"right"}\NormalTok{, }\AttributeTok{trim =} \ConstantTok{TRUE}\NormalTok{)}
+\NormalTok{  max\_width }\OtherTok{\textless{}{-}} \FunctionTok{max}\NormalTok{(}\FunctionTok{nchar}\NormalTok{(formatted\_residuals))}
+\NormalTok{  formatted\_residuals }\OtherTok{\textless{}{-}} \FunctionTok{format}\NormalTok{(summary\_residuals, }\AttributeTok{digits =} \DecValTok{4}\NormalTok{, }\AttributeTok{nsmall =} \DecValTok{3}\NormalTok{, }\AttributeTok{justify =} \StringTok{"right"}\NormalTok{, }\AttributeTok{trim =} \ConstantTok{TRUE}\NormalTok{)}
+
+  \CommentTok{\# printing}
+  \FunctionTok{cat}\NormalTok{(}\StringTok{\textquotesingle{}}\SpecialCharTok{\textbackslash{}n}\StringTok{Residuals:}\SpecialCharTok{\textbackslash{}n}\StringTok{\textquotesingle{}}\NormalTok{)}
+
+  \FunctionTok{cat}\NormalTok{(}\FunctionTok{str\_pad}\NormalTok{(}\StringTok{"Min"}\NormalTok{, max\_width}\SpecialCharTok{+}\DecValTok{2}\NormalTok{, }\AttributeTok{side =} \StringTok{\textquotesingle{}right\textquotesingle{}}\NormalTok{),}
+      \FunctionTok{str\_pad}\NormalTok{(}\StringTok{"1Q"}\NormalTok{, max\_width}\SpecialCharTok{+}\DecValTok{2}\NormalTok{, }\AttributeTok{side =} \StringTok{\textquotesingle{}right\textquotesingle{}}\NormalTok{),}
+      \FunctionTok{str\_pad}\NormalTok{(}\StringTok{"Median"}\NormalTok{, max\_width}\SpecialCharTok{+}\DecValTok{2}\NormalTok{, }\AttributeTok{side =} \StringTok{\textquotesingle{}right\textquotesingle{}}\NormalTok{),}
+      \FunctionTok{str\_pad}\NormalTok{(}\StringTok{"3Q"}\NormalTok{, max\_width}\SpecialCharTok{+}\DecValTok{2}\NormalTok{, }\AttributeTok{side =} \StringTok{\textquotesingle{}right\textquotesingle{}}\NormalTok{),}
+      \FunctionTok{str\_pad}\NormalTok{(}\StringTok{"Max"}\NormalTok{, max\_width}\SpecialCharTok{+}\DecValTok{2}\NormalTok{, }\AttributeTok{side =} \StringTok{\textquotesingle{}right\textquotesingle{}}\NormalTok{), }\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+  \FunctionTok{cat}\NormalTok{(}\FunctionTok{str\_pad}\NormalTok{(formatted\_residuals[}\DecValTok{1}\NormalTok{], max\_width}\SpecialCharTok{+}\DecValTok{2}\NormalTok{, }\AttributeTok{side =} \StringTok{\textquotesingle{}right\textquotesingle{}}\NormalTok{),}
+      \FunctionTok{str\_pad}\NormalTok{(formatted\_residuals[}\DecValTok{2}\NormalTok{], max\_width}\SpecialCharTok{+}\DecValTok{2}\NormalTok{, }\AttributeTok{side =} \StringTok{\textquotesingle{}right\textquotesingle{}}\NormalTok{),}
+      \FunctionTok{str\_pad}\NormalTok{(formatted\_residuals[}\DecValTok{3}\NormalTok{], max\_width}\SpecialCharTok{+}\DecValTok{2}\NormalTok{, }\AttributeTok{side =} \StringTok{\textquotesingle{}right\textquotesingle{}}\NormalTok{),}
+      \FunctionTok{str\_pad}\NormalTok{(formatted\_residuals[}\DecValTok{4}\NormalTok{], max\_width}\SpecialCharTok{+}\DecValTok{2}\NormalTok{, }\AttributeTok{side =} \StringTok{\textquotesingle{}right\textquotesingle{}}\NormalTok{),}
+      \FunctionTok{str\_pad}\NormalTok{(formatted\_residuals[}\DecValTok{5}\NormalTok{], max\_width}\SpecialCharTok{+}\DecValTok{2}\NormalTok{, }\AttributeTok{side =} \StringTok{\textquotesingle{}right\textquotesingle{}}\NormalTok{), }\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+
+
+
+
+  \FunctionTok{cat}\NormalTok{(}\StringTok{\textquotesingle{}}\SpecialCharTok{\textbackslash{}n}\StringTok{Coefficients:}\SpecialCharTok{\textbackslash{}n}\StringTok{\textquotesingle{}}\NormalTok{)}
+\NormalTok{  max\_name }\OtherTok{=} \FunctionTok{max}\NormalTok{(}\FunctionTok{nchar}\NormalTok{(}\FunctionTok{names}\NormalTok{(object}\SpecialCharTok{$}\NormalTok{coeff)))}
+\NormalTok{  formatted\_coeff}\OtherTok{\textless{}{-}} \FunctionTok{format}\NormalTok{(object}\SpecialCharTok{$}\NormalTok{coeff, }\AttributeTok{nsmall =} \DecValTok{4}\NormalTok{,}\AttributeTok{justify =} \StringTok{"right"}\NormalTok{, }\AttributeTok{trim =} \ConstantTok{TRUE}\NormalTok{)}
+\NormalTok{  max\_width }\OtherTok{\textless{}{-}} \FunctionTok{max}\NormalTok{(}\FunctionTok{nchar}\NormalTok{(formatted\_coeff))}
+\NormalTok{  formatted\_coeff }\OtherTok{\textless{}{-}} \FunctionTok{format}\NormalTok{(object}\SpecialCharTok{$}\NormalTok{coeff, }\AttributeTok{nsmall =} \DecValTok{4}\NormalTok{, }\AttributeTok{justify =} \StringTok{"right"}\NormalTok{, }\AttributeTok{trim =} \ConstantTok{TRUE}\NormalTok{)}
+
+
+  \FunctionTok{cat}\NormalTok{(}\FunctionTok{strrep}\NormalTok{(}\StringTok{" "}\NormalTok{, max\_name}\SpecialCharTok{+}\DecValTok{2}\NormalTok{),}
+      \FunctionTok{str\_pad}\NormalTok{(}\StringTok{\textquotesingle{}Estimate\textquotesingle{}}\NormalTok{, max\_width}\SpecialCharTok{+}\DecValTok{3}\NormalTok{, }\StringTok{\textquotesingle{}right\textquotesingle{}}\NormalTok{),}
+      \FunctionTok{str\_pad}\NormalTok{(}\StringTok{\textquotesingle{}Std. Error\textquotesingle{}}\NormalTok{, max\_width}\SpecialCharTok{+}\DecValTok{3}\NormalTok{, }\StringTok{\textquotesingle{}right\textquotesingle{}}\NormalTok{),}
+      \FunctionTok{str\_pad}\NormalTok{(}\StringTok{"z value"}\NormalTok{, max\_width}\SpecialCharTok{+}\DecValTok{3}\NormalTok{, }\StringTok{\textquotesingle{}right\textquotesingle{}}\NormalTok{),}
+      \FunctionTok{str\_pad}\NormalTok{( }\StringTok{"Pr(\textgreater{}|z|)"}\NormalTok{, max\_width}\SpecialCharTok{+}\DecValTok{3}\NormalTok{, }\StringTok{\textquotesingle{}right\textquotesingle{}}\NormalTok{), }\StringTok{\textquotesingle{}}\SpecialCharTok{\textbackslash{}n}\StringTok{\textquotesingle{}}\NormalTok{)}
+\NormalTok{  i }\OtherTok{\textless{}{-}} \DecValTok{1}
+  \ControlFlowTok{for}\NormalTok{ (name }\ControlFlowTok{in} \FunctionTok{names}\NormalTok{(object}\SpecialCharTok{$}\NormalTok{coeff)) \{}
+    \FunctionTok{cat}\NormalTok{(}\FunctionTok{str\_pad}\NormalTok{(name, max\_name}\SpecialCharTok{+}\DecValTok{3}\NormalTok{, }\StringTok{\textquotesingle{}right\textquotesingle{}}\NormalTok{))}
+    \FunctionTok{cat}\NormalTok{(}
+        \FunctionTok{str\_pad}\NormalTok{(formatted\_coeff[[name]], max\_width}\SpecialCharTok{+}\DecValTok{3}\NormalTok{, }\StringTok{\textquotesingle{}right\textquotesingle{}}\NormalTok{),}
+        \FunctionTok{str\_pad}\NormalTok{(}\FunctionTok{format}\NormalTok{(stderr[i], }\AttributeTok{digits =} \DecValTok{1}\NormalTok{, }\AttributeTok{nsmall =} \DecValTok{4}\NormalTok{, }\AttributeTok{justify =} \StringTok{"right"}\NormalTok{, }\AttributeTok{trim =} \ConstantTok{TRUE}\NormalTok{), max\_width}\SpecialCharTok{+}\DecValTok{3}\NormalTok{, }\StringTok{\textquotesingle{}right\textquotesingle{}}\NormalTok{),}
+        \FunctionTok{str\_pad}\NormalTok{(}\FunctionTok{format}\NormalTok{(z[i], }\AttributeTok{digits =} \DecValTok{1}\NormalTok{, }\AttributeTok{nsmall =} \DecValTok{4}\NormalTok{, }\AttributeTok{justify =} \StringTok{"right"}\NormalTok{, }\AttributeTok{trim =} \ConstantTok{TRUE}\NormalTok{), max\_width}\SpecialCharTok{+}\DecValTok{3}\NormalTok{, }\StringTok{\textquotesingle{}right\textquotesingle{}}\NormalTok{),}
+        \FunctionTok{str\_pad}\NormalTok{(}\FunctionTok{paste}\NormalTok{(}\FunctionTok{format}\NormalTok{(p[i], }\AttributeTok{digits =} \DecValTok{1}\NormalTok{, }\AttributeTok{nsmall =} \DecValTok{4}\NormalTok{, }\AttributeTok{justify =} \StringTok{"right"}\NormalTok{, }\AttributeTok{trim =} \ConstantTok{TRUE}\NormalTok{), sig\_level[i]), max\_width}\SpecialCharTok{+}\DecValTok{3}\NormalTok{, }\StringTok{\textquotesingle{}right\textquotesingle{}}\NormalTok{),}
+        \StringTok{\textquotesingle{}}\SpecialCharTok{\textbackslash{}n}\StringTok{\textquotesingle{}}\NormalTok{)}
+\NormalTok{    i }\OtherTok{\textless{}{-}}\NormalTok{ i}\SpecialCharTok{+}\DecValTok{1}
+\NormalTok{  \}}
+
+\NormalTok{  R\_sqrd }\OtherTok{\textless{}{-}} \DecValTok{1}\SpecialCharTok{{-}}\NormalTok{(RSS}\SpecialCharTok{/}\NormalTok{object}\SpecialCharTok{$}\NormalTok{TSS)}
+\NormalTok{  F\_stat }\OtherTok{\textless{}{-}}\NormalTok{ ((object}\SpecialCharTok{$}\NormalTok{TSS}\SpecialCharTok{{-}}\NormalTok{RSS)}\SpecialCharTok{/}\NormalTok{(object}\SpecialCharTok{$}\NormalTok{rank}\DecValTok{{-}1}\NormalTok{))}\SpecialCharTok{/}\NormalTok{(RSS}\SpecialCharTok{/}\NormalTok{object}\SpecialCharTok{$}\NormalTok{dof\_residuals )}
+\NormalTok{  p\_value\_f }\OtherTok{\textless{}{-}} \DecValTok{1} \SpecialCharTok{{-}} \FunctionTok{pf}\NormalTok{(F\_stat, }\AttributeTok{df1 =}\NormalTok{ object}\SpecialCharTok{$}\NormalTok{rank }\SpecialCharTok{{-}} \DecValTok{1}\NormalTok{, }\AttributeTok{df2 =}\NormalTok{ object}\SpecialCharTok{$}\NormalTok{dof\_residuals)}
+
+  \FunctionTok{cat}\NormalTok{(}\StringTok{\textquotesingle{}}\SpecialCharTok{\textbackslash{}n}\StringTok{Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1}\SpecialCharTok{\textbackslash{}n}\StringTok{\textquotesingle{}}\NormalTok{)}
+
+  \FunctionTok{cat}\NormalTok{(}\StringTok{\textquotesingle{}Residual standard error: \textquotesingle{}}\NormalTok{, }\FunctionTok{format}\NormalTok{(}\FunctionTok{sqrt}\NormalTok{(sigma2), }\AttributeTok{digits=}\DecValTok{4}\NormalTok{), }\StringTok{\textquotesingle{}on \textquotesingle{}}\NormalTok{, object}\SpecialCharTok{$}\NormalTok{dof\_residuals,}\StringTok{\textquotesingle{}degrees of freedom\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}}\SpecialCharTok{\textbackslash{}n}\StringTok{\textquotesingle{}}\NormalTok{) }\CommentTok{\# values missing}
+  \FunctionTok{cat}\NormalTok{(}\StringTok{\textquotesingle{}Multiple R{-}squared: \textquotesingle{}}\NormalTok{, }\FunctionTok{format}\NormalTok{(R\_sqrd, }\AttributeTok{digits=}\DecValTok{4}\NormalTok{), }\StringTok{\textquotesingle{}, \textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}Adjusted R{-}squared: \textquotesingle{}}\NormalTok{, }\FunctionTok{format}\NormalTok{(}\DecValTok{1}\SpecialCharTok{{-}}\NormalTok{((}\DecValTok{1}\SpecialCharTok{{-}}\NormalTok{R\_sqrd)}\SpecialCharTok{*}\NormalTok{(}\FunctionTok{nrow}\NormalTok{(X)}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{)}\SpecialCharTok{/}\NormalTok{object}\SpecialCharTok{$}\NormalTok{dof\_residuals), }\AttributeTok{digits=}\DecValTok{4}\NormalTok{), }\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+  \FunctionTok{cat}\NormalTok{(}\StringTok{\textquotesingle{}F{-}statistic: \textquotesingle{}}\NormalTok{, }\FunctionTok{format}\NormalTok{(F\_stat,}\AttributeTok{digits =} \DecValTok{1}\NormalTok{, }\AttributeTok{nsmall =} \DecValTok{1}\NormalTok{), }\StringTok{\textquotesingle{}on\textquotesingle{}}\NormalTok{,object}\SpecialCharTok{$}\NormalTok{rank}\DecValTok{{-}1}\NormalTok{, }\StringTok{\textquotesingle{}and\textquotesingle{}}\NormalTok{,object}\SpecialCharTok{$}\NormalTok{dof\_residuals ,}\StringTok{\textquotesingle{}DF, p{-}value:\textquotesingle{}}\NormalTok{, }\FunctionTok{format}\NormalTok{(p\_value\_f ,}\AttributeTok{digits =} \DecValTok{1}\NormalTok{, }\AttributeTok{nsmall =} \DecValTok{3}\NormalTok{),}\StringTok{\textquotesingle{}}\SpecialCharTok{\textbackslash{}n}\StringTok{\textquotesingle{}}\NormalTok{ )}
+
+\NormalTok{\}}
+
+\NormalTok{plot.mylm }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(object, ...)\{}
+  \CommentTok{\# Code here is used when plot(object) is used on objects of class "mylm"}
+
+  \FunctionTok{library}\NormalTok{(ggplot2)}
+  \CommentTok{\# ggplot requires that the data is in a data.frame, this must be done here}
+\NormalTok{  data\_plot }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}\AttributeTok{Fitted =}\NormalTok{ object}\SpecialCharTok{$}\NormalTok{fitted\_values, }\AttributeTok{Residuals=}\NormalTok{object}\SpecialCharTok{$}\NormalTok{residuals)}
+
+    \FunctionTok{ggplot}\NormalTok{(data\_plot, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Fitted, }\AttributeTok{y=}\NormalTok{Residuals)) }\SpecialCharTok{+} \FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{shape =} \DecValTok{1}\NormalTok{, }\AttributeTok{size =} \DecValTok{2}\NormalTok{) }\SpecialCharTok{+}
+      \FunctionTok{ggtitle}\NormalTok{(}\StringTok{\textquotesingle{}Residuals vs Fitted\textquotesingle{}}\NormalTok{) }\SpecialCharTok{+}
+      \FunctionTok{labs}\NormalTok{(}\AttributeTok{x =} \StringTok{\textquotesingle{}Fitted Values\textquotesingle{}}\NormalTok{, }\AttributeTok{y =} \StringTok{\textquotesingle{}Residuals\textquotesingle{}}\NormalTok{) }\SpecialCharTok{+}
+      \FunctionTok{geom\_hline}\NormalTok{(}\AttributeTok{yintercept =} \DecValTok{0}\NormalTok{, }\AttributeTok{linetype =} \StringTok{"dashed"}\NormalTok{, }\AttributeTok{color =} \StringTok{"grey"}\NormalTok{) }\SpecialCharTok{+}
+      \FunctionTok{theme\_minimal}\NormalTok{()}
+
+  \CommentTok{\# if you want the plot to look nice, you can e.g. use "labs" to add labels, and add colors in the geom\_point{-}function}
+
+\NormalTok{\}}
+
+\NormalTok{anova.mylm }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(object, ...)\{}
+  \CommentTok{\# Code here is used when anova(object) is used on objects of class "mylm"}
+
+  \CommentTok{\# Components to test}
+\NormalTok{  comp }\OtherTok{\textless{}{-}} \FunctionTok{attr}\NormalTok{(object}\SpecialCharTok{$}\NormalTok{terms, }\StringTok{"term.labels"}\NormalTok{)}
+
+  \CommentTok{\# Name of response}
+\NormalTok{  response }\OtherTok{\textless{}{-}} \FunctionTok{deparse}\NormalTok{(object}\SpecialCharTok{$}\NormalTok{terms[[}\DecValTok{2}\NormalTok{]])}
+
+  \CommentTok{\# Total Sum of Squares (TSS)}
+\NormalTok{  TSS }\OtherTok{\textless{}{-}} \FunctionTok{sum}\NormalTok{((object}\SpecialCharTok{$}\NormalTok{model[[response]] }\SpecialCharTok{{-}} \FunctionTok{mean}\NormalTok{(object}\SpecialCharTok{$}\NormalTok{model[[response]]))}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{)}
+
+  \CommentTok{\# Fit the sequence of models}
+\NormalTok{  txtFormula }\OtherTok{\textless{}{-}} \FunctionTok{paste}\NormalTok{(response, }\StringTok{"\textasciitilde{}"}\NormalTok{, }\AttributeTok{sep =} \StringTok{""}\NormalTok{) }\CommentTok{\# for the formula for lm}
+  \FunctionTok{print}\NormalTok{(txtFormula)}
+\NormalTok{  model }\OtherTok{\textless{}{-}} \FunctionTok{list}\NormalTok{()}
+\NormalTok{  RSS }\OtherTok{\textless{}{-}} \FunctionTok{numeric}\NormalTok{(}\FunctionTok{length}\NormalTok{(comp) }\SpecialCharTok{+} \DecValTok{1}\NormalTok{)  }\CommentTok{\# empty to store RSS}
+\NormalTok{  df }\OtherTok{\textless{}{-}} \FunctionTok{numeric}\NormalTok{(}\FunctionTok{length}\NormalTok{(comp) }\SpecialCharTok{+} \DecValTok{1}\NormalTok{)   }\CommentTok{\# empty to store df}
+
+  \CommentTok{\# First model (only intercept)}
+\NormalTok{  RSS[}\DecValTok{1}\NormalTok{] }\OtherTok{\textless{}{-}}\NormalTok{ TSS}
+\NormalTok{  df[}\DecValTok{1}\NormalTok{] }\OtherTok{\textless{}{-}} \FunctionTok{nrow}\NormalTok{(object}\SpecialCharTok{$}\NormalTok{model) }\SpecialCharTok{{-}} \DecValTok{1}
+
+
+  \CommentTok{\# Fit the sequence of models}
+\NormalTok{  txtFormula }\OtherTok{\textless{}{-}} \FunctionTok{paste}\NormalTok{(response, }\StringTok{"\textasciitilde{}"}\NormalTok{, }\AttributeTok{sep =} \StringTok{""}\NormalTok{)}
+\NormalTok{  model }\OtherTok{\textless{}{-}} \FunctionTok{list}\NormalTok{()}
+  \ControlFlowTok{for}\NormalTok{(numComp }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\FunctionTok{length}\NormalTok{(comp))\{}
+    \ControlFlowTok{if}\NormalTok{(numComp }\SpecialCharTok{==} \DecValTok{1}\NormalTok{)\{}
+\NormalTok{      txtFormula }\OtherTok{\textless{}{-}} \FunctionTok{paste}\NormalTok{(txtFormula, comp[numComp])}
+\NormalTok{    \}}
+    \ControlFlowTok{else}\NormalTok{\{}
+\NormalTok{      txtFormula }\OtherTok{\textless{}{-}} \FunctionTok{paste}\NormalTok{(txtFormula, comp[numComp], }\AttributeTok{sep =} \StringTok{"+"}\NormalTok{)}
+\NormalTok{    \}}
+\NormalTok{    formula }\OtherTok{\textless{}{-}} \FunctionTok{formula}\NormalTok{(txtFormula)}
+\NormalTok{    model[[numComp]] }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(}\AttributeTok{formula =}\NormalTok{ formula, }\AttributeTok{data =}\NormalTok{ object}\SpecialCharTok{$}\NormalTok{model)}
+    \CommentTok{\# Fit the new model and calculate RSS}
+\NormalTok{    model[[numComp]] }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(}\AttributeTok{formula =}\NormalTok{ formula, }\AttributeTok{data =}\NormalTok{ object}\SpecialCharTok{$}\NormalTok{model)}
+\NormalTok{    RSS[numComp }\SpecialCharTok{+} \DecValTok{1}\NormalTok{] }\OtherTok{\textless{}{-}} \FunctionTok{sum}\NormalTok{(model[[numComp]]}\SpecialCharTok{$}\NormalTok{residuals}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{)}
+\NormalTok{    df[numComp }\SpecialCharTok{+} \DecValTok{1}\NormalTok{] }\OtherTok{\textless{}{-}}\NormalTok{ model[[numComp]]}\SpecialCharTok{$}\NormalTok{df.residual}
+\NormalTok{  \}}
+  \CommentTok{\# empty list to store values}
+\NormalTok{  anova\_table }\OtherTok{\textless{}{-}} \FunctionTok{list}\NormalTok{()}
+
+  \CommentTok{\# Loop through the models and calculate stats}
+  \ControlFlowTok{for}\NormalTok{ (numComp }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\FunctionTok{length}\NormalTok{(comp)) \{}
+    \CommentTok{\# Calculate difference in RSS}
+\NormalTok{    SS\_diff }\OtherTok{\textless{}{-}}\NormalTok{ RSS[numComp] }\SpecialCharTok{{-}}\NormalTok{ RSS[numComp }\SpecialCharTok{+} \DecValTok{1}\NormalTok{]}
+\NormalTok{    df\_diff }\OtherTok{\textless{}{-}}\NormalTok{ df[numComp] }\SpecialCharTok{{-}}\NormalTok{ df[numComp }\SpecialCharTok{+} \DecValTok{1}\NormalTok{]}
+\NormalTok{    MS\_diff }\OtherTok{\textless{}{-}}\NormalTok{ SS\_diff }\SpecialCharTok{/}\NormalTok{ df\_diff  }\CommentTok{\# Mean square for the model}
+\NormalTok{    MS\_residual }\OtherTok{\textless{}{-}}\NormalTok{ RSS[numComp }\SpecialCharTok{+} \DecValTok{1}\NormalTok{] }\SpecialCharTok{/}\NormalTok{ df[numComp }\SpecialCharTok{+} \DecValTok{1}\NormalTok{]  }\CommentTok{\# for Chi\^{}2 statistic}
+
+    \CommentTok{\# Chi\^{}2 statistic}
+\NormalTok{    chi\_sq }\OtherTok{\textless{}{-}}\NormalTok{ SS\_diff }\SpecialCharTok{/}\NormalTok{ MS\_residual}
+
+    \CommentTok{\# P{-}value from Chi{-}squared distribution}
+\NormalTok{    p\_value }\OtherTok{\textless{}{-}} \FunctionTok{pchisq}\NormalTok{(chi\_sq, df\_diff, }\AttributeTok{lower.tail =} \ConstantTok{FALSE}\NormalTok{)}
+
+    \CommentTok{\# Store the values in the list}
+\NormalTok{    anova\_table[[numComp]] }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(df\_diff, SS\_diff, MS\_diff, chi\_sq, p\_value)}
+\NormalTok{  \}}
+
+  \CommentTok{\# Convert the list to df}
+\NormalTok{  anova\_df }\OtherTok{\textless{}{-}} \FunctionTok{as.data.frame}\NormalTok{(}\FunctionTok{do.call}\NormalTok{(rbind, anova\_table))}
+  \FunctionTok{colnames}\NormalTok{(anova\_df) }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"Df"}\NormalTok{, }\StringTok{"Sum\_Sq"}\NormalTok{, }\StringTok{"Mean\_Sq"}\NormalTok{, }\StringTok{"Chi\^{}2"}\NormalTok{, }\StringTok{"Pr(\textgreater{}Chi)"}\NormalTok{)}
+
+\NormalTok{  anova\_df[[}\StringTok{"Sum\_Sq"}\NormalTok{]] }\OtherTok{\textless{}{-}} \FunctionTok{round}\NormalTok{(anova\_df[[}\StringTok{"Sum\_Sq"}\NormalTok{]], }\DecValTok{0}\NormalTok{)}
+\NormalTok{  anova\_df[[}\StringTok{\textquotesingle{}Mean\_Sq\textquotesingle{}}\NormalTok{]] }\OtherTok{\textless{}{-}} \FunctionTok{round}\NormalTok{(anova\_df[[}\StringTok{\textquotesingle{}Mean\_Sq\textquotesingle{}}\NormalTok{]], }\DecValTok{0}\NormalTok{)}
+\NormalTok{  anova\_df[[}\StringTok{\textquotesingle{}Chi\^{}2\textquotesingle{}}\NormalTok{]] }\OtherTok{\textless{}{-}} \FunctionTok{round}\NormalTok{(anova\_df[[}\StringTok{\textquotesingle{}Chi\^{}2\textquotesingle{}}\NormalTok{]], }\DecValTok{3}\NormalTok{)}
+\NormalTok{  anova\_df[[}\StringTok{\textquotesingle{}Pr(\textgreater{}Chi)\textquotesingle{}}\NormalTok{]] }\OtherTok{\textless{}{-}} \FunctionTok{round}\NormalTok{(anova\_df[[}\StringTok{\textquotesingle{}Pr(\textgreater{}Chi)\textquotesingle{}}\NormalTok{]], }\DecValTok{3}\NormalTok{)}
+
+
+  \CommentTok{\# Define the significance function}
+\NormalTok{  get\_significance }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(p\_value) \{}
+    \ControlFlowTok{if}\NormalTok{ (p\_value }\SpecialCharTok{\textless{}} \FloatTok{0.001}\NormalTok{) \{}
+      \FunctionTok{return}\NormalTok{(}\StringTok{"***"}\NormalTok{)}
+\NormalTok{    \} }\ControlFlowTok{else} \ControlFlowTok{if}\NormalTok{ (p\_value }\SpecialCharTok{\textless{}} \FloatTok{0.01}\NormalTok{) \{}
+      \FunctionTok{return}\NormalTok{(}\StringTok{"**"}\NormalTok{)}
+\NormalTok{    \} }\ControlFlowTok{else} \ControlFlowTok{if}\NormalTok{ (p\_value }\SpecialCharTok{\textless{}} \FloatTok{0.05}\NormalTok{) \{}
+      \FunctionTok{return}\NormalTok{(}\StringTok{"*"}\NormalTok{)}
+\NormalTok{    \} }\ControlFlowTok{else} \ControlFlowTok{if}\NormalTok{ (p\_value }\SpecialCharTok{\textless{}} \FloatTok{0.1}\NormalTok{) \{}
+      \FunctionTok{return}\NormalTok{(}\StringTok{"."}\NormalTok{)}
+\NormalTok{    \} }\ControlFlowTok{else}\NormalTok{ \{}
+      \FunctionTok{return}\NormalTok{(}\StringTok{" "}\NormalTok{)}
+\NormalTok{    \}}
+\NormalTok{  \}}
+\NormalTok{  anova\_df}\SpecialCharTok{$}\NormalTok{Signif }\OtherTok{\textless{}{-}} \FunctionTok{sapply}\NormalTok{(}\FunctionTok{as.numeric}\NormalTok{(anova\_df[[}\StringTok{\textquotesingle{}Pr(\textgreater{}Chi)\textquotesingle{}}\NormalTok{]]), get\_significance)}
+
+  \CommentTok{\# Find max for formatting}
+\NormalTok{  max\_lengths }\OtherTok{\textless{}{-}} \FunctionTok{sapply}\NormalTok{(anova\_df, }\ControlFlowTok{function}\NormalTok{(col) }\FunctionTok{max}\NormalTok{(}\FunctionTok{nchar}\NormalTok{(}\FunctionTok{as.character}\NormalTok{(col))))}
+\NormalTok{  max\_width }\OtherTok{\textless{}{-}} \FunctionTok{max}\NormalTok{(max\_lengths)}
+\NormalTok{  max\_name }\OtherTok{=} \FunctionTok{max}\NormalTok{(}\FunctionTok{nchar}\NormalTok{(}\FunctionTok{names}\NormalTok{(object}\SpecialCharTok{$}\NormalTok{coeff)))}
+
+  \CommentTok{\# Prepare to print ANOVA table with formatted widths}
+  \FunctionTok{cat}\NormalTok{(}\StringTok{\textquotesingle{}Analysis of Variance Table}\SpecialCharTok{\textbackslash{}n}\StringTok{\textquotesingle{}}\NormalTok{)}
+  \FunctionTok{cat}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\StringTok{\textquotesingle{}Response: \textquotesingle{}}\NormalTok{, response, }\StringTok{\textquotesingle{}}\SpecialCharTok{\textbackslash{}n}\StringTok{\textquotesingle{}}\NormalTok{), }\AttributeTok{sep =} \StringTok{\textquotesingle{}\textquotesingle{}}\NormalTok{)}
+
+  \FunctionTok{cat}\NormalTok{(}\FunctionTok{strrep}\NormalTok{(}\StringTok{" "}\NormalTok{, max\_name}\SpecialCharTok{+}\DecValTok{2}\NormalTok{),}
+      \FunctionTok{str\_pad}\NormalTok{(}\StringTok{\textquotesingle{}Df\textquotesingle{}}\NormalTok{, max\_width}\SpecialCharTok{+}\DecValTok{3}\NormalTok{, }\StringTok{\textquotesingle{}right\textquotesingle{}}\NormalTok{),}
+      \FunctionTok{str\_pad}\NormalTok{(}\StringTok{\textquotesingle{}Sum Sq\textquotesingle{}}\NormalTok{, max\_width}\SpecialCharTok{+}\DecValTok{3}\NormalTok{, }\StringTok{\textquotesingle{}right\textquotesingle{}}\NormalTok{),}
+      \FunctionTok{str\_pad}\NormalTok{(}\StringTok{"Mean Sq"}\NormalTok{, max\_width}\SpecialCharTok{+}\DecValTok{3}\NormalTok{, }\StringTok{\textquotesingle{}right\textquotesingle{}}\NormalTok{),}
+      \FunctionTok{str\_pad}\NormalTok{(}\StringTok{"Chi\^{}2"}\NormalTok{, max\_width}\SpecialCharTok{+}\DecValTok{3}\NormalTok{, }\StringTok{\textquotesingle{}right\textquotesingle{}}\NormalTok{),}
+      \FunctionTok{str\_pad}\NormalTok{( }\StringTok{"Pr(\textgreater{}Chi\^{}2)"}\NormalTok{, max\_width}\SpecialCharTok{+}\DecValTok{3}\NormalTok{, }\StringTok{\textquotesingle{}right\textquotesingle{}}\NormalTok{), }\StringTok{\textquotesingle{}}\SpecialCharTok{\textbackslash{}n}\StringTok{\textquotesingle{}}\NormalTok{)}
+\NormalTok{  i }\OtherTok{\textless{}{-}} \DecValTok{1}
+  \ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\FunctionTok{nrow}\NormalTok{(anova\_df)) \{}
+    \FunctionTok{cat}\NormalTok{(}\FunctionTok{str\_pad}\NormalTok{(comp[i], max\_name}\SpecialCharTok{+}\DecValTok{3}\NormalTok{, }\StringTok{\textquotesingle{}right\textquotesingle{}}\NormalTok{))}
+    \FunctionTok{cat}\NormalTok{(}
+      \FunctionTok{str\_pad}\NormalTok{(anova\_df[i, }\StringTok{"Df"}\NormalTok{], max\_width}\SpecialCharTok{+}\DecValTok{3}\NormalTok{, }\StringTok{\textquotesingle{}right\textquotesingle{}}\NormalTok{),}
+      \FunctionTok{str\_pad}\NormalTok{(anova\_df[i, }\StringTok{"Sum\_Sq"}\NormalTok{], max\_width}\SpecialCharTok{+}\DecValTok{3}\NormalTok{, }\StringTok{\textquotesingle{}right\textquotesingle{}}\NormalTok{),}
+      \FunctionTok{str\_pad}\NormalTok{(anova\_df[i, }\StringTok{"Mean\_Sq"}\NormalTok{], max\_width}\SpecialCharTok{+}\DecValTok{3}\NormalTok{, }\StringTok{\textquotesingle{}right\textquotesingle{}}\NormalTok{),}
+      \FunctionTok{str\_pad}\NormalTok{(anova\_df[i, }\StringTok{"Chi\^{}2"}\NormalTok{], max\_width}\SpecialCharTok{+}\DecValTok{3}\NormalTok{, }\StringTok{\textquotesingle{}right\textquotesingle{}}\NormalTok{),}
+      \FunctionTok{str\_pad}\NormalTok{(}\FunctionTok{paste}\NormalTok{(anova\_df[i, }\StringTok{"Pr(\textgreater{}Chi)"}\NormalTok{],anova\_df}\SpecialCharTok{$}\NormalTok{Signif), max\_width}\SpecialCharTok{+}\DecValTok{3}\NormalTok{, }\StringTok{\textquotesingle{}right\textquotesingle{}}\NormalTok{),}
+      \StringTok{\textquotesingle{}}\SpecialCharTok{\textbackslash{}n}\StringTok{\textquotesingle{}}\NormalTok{)}
+\NormalTok{    i }\OtherTok{\textless{}{-}}\NormalTok{ i}\SpecialCharTok{+}\DecValTok{1}
+\NormalTok{  \}}
+
+\NormalTok{  residual\_SumSq }\OtherTok{\textless{}{-}}\NormalTok{ RSS[}\DecValTok{1}\NormalTok{] }\SpecialCharTok{{-}} \FunctionTok{sum}\NormalTok{(}\FunctionTok{as.numeric}\NormalTok{(anova\_df}\SpecialCharTok{$}\NormalTok{Sum\_Sq))}
+\NormalTok{  residual\_Mean\_Sq }\OtherTok{\textless{}{-}}\NormalTok{ residual\_SumSq}\SpecialCharTok{/}\NormalTok{object}\SpecialCharTok{$}\NormalTok{dof\_residuals}
+  \FunctionTok{cat}\NormalTok{(}\FunctionTok{str\_pad}\NormalTok{(}\StringTok{\textquotesingle{}Residuals\textquotesingle{}}\NormalTok{, max\_name}\SpecialCharTok{+}\DecValTok{2}\NormalTok{, }\StringTok{\textquotesingle{}right\textquotesingle{}}\NormalTok{),}
+      \FunctionTok{str\_pad}\NormalTok{(object}\SpecialCharTok{$}\NormalTok{dof\_residuals, max\_width}\SpecialCharTok{+}\DecValTok{3}\NormalTok{, }\StringTok{\textquotesingle{}right\textquotesingle{}}\NormalTok{),}
+      \FunctionTok{str\_pad}\NormalTok{(}\FunctionTok{round}\NormalTok{(residual\_SumSq), max\_width}\SpecialCharTok{+}\DecValTok{3}\NormalTok{, }\StringTok{\textquotesingle{}right\textquotesingle{}}\NormalTok{),}
+      \FunctionTok{str\_pad}\NormalTok{(}\FunctionTok{round}\NormalTok{(residual\_Mean\_Sq), max\_width}\SpecialCharTok{+}\DecValTok{3}\NormalTok{, }\StringTok{\textquotesingle{}right\textquotesingle{}}\NormalTok{))}
+  \FunctionTok{cat}\NormalTok{(}\StringTok{\textquotesingle{}}\SpecialCharTok{\textbackslash{}n}\StringTok{Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1}\SpecialCharTok{\textbackslash{}n}\StringTok{\textquotesingle{}}\NormalTok{)}
+  \FunctionTok{cat}\NormalTok{(}\StringTok{\textquotesingle{}Total Sum SQ:\textquotesingle{}}\NormalTok{, }\FunctionTok{round}\NormalTok{(object}\SpecialCharTok{$}\NormalTok{TSS), }\StringTok{\textquotesingle{}}\SpecialCharTok{\textbackslash{}n}\StringTok{\textquotesingle{}}\NormalTok{)}
+
+  \CommentTok{\# chi squared test}
+\NormalTok{  chi2\_stat }\OtherTok{\textless{}{-}}\NormalTok{ (object}\SpecialCharTok{$}\NormalTok{TSS }\SpecialCharTok{{-}}\NormalTok{ residual\_SumSq) }\SpecialCharTok{/}\NormalTok{ (residual\_SumSq }\SpecialCharTok{/}\NormalTok{ object}\SpecialCharTok{$}\NormalTok{dof\_residuals)}
+\NormalTok{  p\_value\_chi2 }\OtherTok{\textless{}{-}} \DecValTok{1} \SpecialCharTok{{-}} \FunctionTok{pchisq}\NormalTok{(chi2\_stat, }\AttributeTok{df =}\NormalTok{ object}\SpecialCharTok{$}\NormalTok{rank }\SpecialCharTok{{-}} \DecValTok{1}\NormalTok{)}
+  \FunctionTok{cat}\NormalTok{(}\StringTok{\textquotesingle{}Chi{-}statistic: \textquotesingle{}}\NormalTok{, }\FunctionTok{format}\NormalTok{(chi2\_stat,}\AttributeTok{digits =} \DecValTok{1}\NormalTok{, }\AttributeTok{nsmall =} \DecValTok{1}\NormalTok{), }\StringTok{\textquotesingle{}on\textquotesingle{}}\NormalTok{, object}\SpecialCharTok{$}\NormalTok{dof\_residuals ,}\StringTok{\textquotesingle{}DF, p{-}value:\textquotesingle{}}\NormalTok{, }\FunctionTok{format}\NormalTok{(p\_value\_chi2 ,}\AttributeTok{digits =} \DecValTok{1}\NormalTok{, }\AttributeTok{nsmall =} \DecValTok{3}\NormalTok{),}\StringTok{\textquotesingle{}}\SpecialCharTok{\textbackslash{}n}\StringTok{\textquotesingle{}}\NormalTok{ )}
+
+  \CommentTok{\#return(model)}
+
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+
+\end{document}

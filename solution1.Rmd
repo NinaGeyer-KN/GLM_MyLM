@@ -2,12 +2,12 @@
 ---
 title: "solution_1"
 output:
-  pdf_document: default
   html_document: default
+  pdf_document: default
 date: "2024-09-02"
 ---
-## Names: 
-13
+### Names: 
+Group:13 <br>
 Nina Geyer 
 
 ```{r setup, include=FALSE}
@@ -31,21 +31,23 @@ data(SLID, package = "carData")
 SLID <- SLID[complete.cases(SLID), ]
 ggpairs(SLID)
 ```
+
 ### Relations: 
-- medium strong (Cohen) , positive correlation between education and wages and age and wages --> good if we want to predict wages, bad if not, because then it shows multicollinearity 
-- weak (Cohen), negative correlation between age and education --> again good for prediction of one of them, but bad if not
-- there seems to be a small difference in wages between the sexes (males gaining more than females)
-- no difference in wages regarding the language level 
-- about same distribution of education and age regarding sex 
+- There is a medium strong (Cohen), positive correlation between education and wages and age and wages --> good if we want to predict wages, bad if not, because then there might be multicollinearity 
+- There is a weak (Cohen), negative correlation between age and education --> again good for prediction of one of them, but bad if not
+- There seems to be a small difference in wages between the sexes (males gaining more than females)
+- No difference in wages regarding the language level 
+- About same distribution of education and age regarding sex 
 
 ## Part 2:  Linear regression with the mylm package
 
 ### Questions:
 
-What is the interpretation of the parameter estimates?
+What is the interpretation of the parameter estimates?<br>
+
 - The parameter estimation shows the influence or strength of influence of the covariate on the dependent variable.
 - The z- and p-values show if this effect in the linear regression is significant or not, so if it would show as well, if we would repeat the experiment.
-- The intercept shows the value of the dependent varaible if all covariatees are 0. 
+- The intercept shows the value of the dependent varaible if all covariates are 0. 
 
 ```{r linear regression, eval = TRUE}
 #install.packages("car")
@@ -83,9 +85,9 @@ plot.mylm(model1)
 - Also, the distribution for the positive residuals has a higher variance than for the negative one. 
 
 ### ANOVA
--What is the residual sum of squares (SSE) and the degrees of freedom for this model? See output.
--What is total sum of squares (SST) for this model? Test the significance of the regression using a $\chi^2$-test. 23096 (Sum Sq education) + 223694 (sum sq residuals) = 246790. 
--What is the relationship between the $\chi^2$- and $z$-statistic in simple linear regression? Find the critical value(s) for both tests. As there is only one beta to test in simple linear regression the $\chi^2$ for the whole model should be the squared z statistic for education, which is true for our values $\chi^2$ = 411 and z = 20.284 (20.284^2 = 411.44).
+- What is the residual sum of squares (SSE) and the degrees of freedom for this model? See output.
+- What is total sum of squares (SST) for this model? Test the significance of the regression using a $\chi^2$-test. 23096 (Sum Sq education) + 223694 (sum sq residuals) = 246790. Test is in the output and shows significant explanation of variance.
+- What is the relationship between the $\chi^2$- and $z$-statistic in simple linear regression? Find the critical value(s) for both tests. As there is only one beta to test in simple linear regression the $\chi^2$ for the whole model should be the squared z statistic for education, which is true for our values $\chi^2$ = 411 and z = 20.284 (20.284^2 = 411.44).
 ```{r linear regression anova, eval = TRUE}
 library(mylm)
 library(stringr)
@@ -97,9 +99,8 @@ anova.mylm(model1)
 - The covariate education gets a significant $\chi^2$ value which means there is a high probability that it explains variance of the dependent variable. 
 
 # Part 3: Multiple Linear Regression 
--What are the estimates and standard errors of the intercepts and regression coefficients for this model? 
--Test the significance of the coefficients using a $z$-test.
--What is the interpretation of the parameters?
+- What are the estimates and standard errors of the intercepts and regression coefficients for this model? 
+- Test the significance of the coefficients using a $z$-test.
 
 ```{r multiple linear regression anova, eval = TRUE}
 library(mylm)
@@ -108,7 +109,8 @@ model1d <- mylm(wages ~ education + age, data = SLID)
 summary.mylm(model1d)
 ```
 
-What is the interpretation of the parameters? 
+What is the interpretation of the parameters? <br>
+
 - The intercept is negative, probably because all data points (persons) have an age higher than 0.
 - Education seems to have a higher influence than age as the parameter estimate is higher. 
 - Both parameters are significant, so should have an influence on wages. 
@@ -127,9 +129,10 @@ summary.mylm(test)
 ```
 
 Why (and when) does the parameter estimates found (the two simple and the one multiple) differ? 
+
 - They should not differ, if the covariates so age and education are independent (no correlation). 
 - They differ because age and education are correlated.
-Explain/show how you can use mylm to find these values. --> Use the function on the model.
+Explain/show how you can use mylm to find these values. --> Use the function on the model, if we want to know if there is a relationship between the variables, we can use the mylm function on them eg education and age.
 
 # Part 4: Testing mylm 
 ```{r Test mylm 1, eval = TRUE}
@@ -140,7 +143,7 @@ plot.mylm(model3)
 
 ```
 
-That sex/gender has a significant influence on the wages as well as age. Language has no significant effect and the squared education has an effect but a really small one. The model explains about 30% of the variance. We could leave out the language because it is unnecessary.
+That sex/gender has a significant influence on the wages as well as age. Language has no significant effect and the squared education has an effect but a really small one. The model explains about 30% of the variance. We could leave out the language because it seems not to explain a significant proportion of the dependent variable.
 
 ```{r Test mylm 2, eval = TRUE, echo = FALSE}
 library(mylm)
@@ -150,7 +153,7 @@ plot.mylm(model4)
 ```
 
 Language is still insignificant, age has an effect on wages. Also the interaction of languageFrench and age is significant. But the interaction term has only a small estimate. The model explains about 13% of the variance.
-In this model, I probably would add sex again, because it seems to explain a large proportion of variance.  
+In this model, we probably would add sex again, because it seems to explain a large proportion of variance.  
 
 ```{r Test mylm 3x, eval = TRUE}
 library(mylm)
