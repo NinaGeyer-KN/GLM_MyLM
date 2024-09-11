@@ -6,6 +6,9 @@ output:
   html_document: default
 date: "2024-09-02"
 ---
+## Names: 
+13
+Nina Geyer 
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
