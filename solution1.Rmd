@@ -137,32 +137,36 @@ Explain/show how you can use mylm to find these values. --> Use the function on 
 # Part 4: Testing mylm 
 ```{r Test mylm 1, eval = TRUE}
 library(mylm)
+library(stringr)
 model3 <- mylm(wages ~ sex + age + language + I(education^2), data = SLID)
 summary.mylm(model3)
 plot.mylm(model3)
-
 ```
 
-That sex/gender has a significant influence on the wages as well as age. Language has no significant effect and the squared education has an effect but a really small one. The model explains about 30% of the variance. We could leave out the language because it seems not to explain a significant proportion of the dependent variable.
+That sex/gender has a significant influence on the wages as well as age and the squared education. Language has no significant effect. The model explains about 30% of the variance. We could leave out the language because it seems not to explain a significant proportion of the dependent variable. The residual plot is funnel shape which suggests multicollinearity in the data.
 
 ```{r Test mylm 2, eval = TRUE, echo = FALSE}
 library(mylm)
+library(stringr)
 model4 <- mylm(wages ~ language + age + language * age, data = SLID)
 summary.mylm(model4)
 plot.mylm(model4)
+anova.mylm(model4)
 ```
 
-Language is still insignificant, age has an effect on wages. Also the interaction of languageFrench and age is significant. But the interaction term has only a small estimate. The model explains about 13% of the variance.
+Language is still insignificant and age has a significant effect on wages. Also the interaction of languageFrench and age is significant. The model explains about 13% of the variance. The anova shows that age has the largest sum of squares which could indicate that age is explaining most of the variance in the regression. As the result of the anova is dependent upon the order we enter the variables to the model, this proposition might not hold in all models.
 In this model, we probably would add sex again, because it seems to explain a large proportion of variance.  
 
 ```{r Test mylm 3x, eval = TRUE}
 library(mylm)
+library(stringr)
 model5 <- mylm(wages ~ education - 1, data = SLID)
 summary.mylm(model5)
 plot.mylm(model5)
+#anova.mylm(model5)
 ```
 
-As there is no intercept the for a education of zero there is also a wage of zero now. The parameter for education is greater than with the intercept, as it has to compensate for the missing intercept. Also, the R^2 is smaller. We would recommend adding the intercept. 
+As there is no intercept the for a education of zero there is also a wage of zero now. The parameter for education is greater than with the intercept, as it has to compensate for the missing intercept. Again, the residual plot shows that the errors are higher with a higher dependent variable. Also, the R^2 is smaller. We would recommend adding the intercept. 
 
 ```{r Code for package, eval = FALSE}
 # Select Build, Build and reload to build and lode into the R-session.
