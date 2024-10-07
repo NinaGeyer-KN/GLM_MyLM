@@ -1,0 +1,287 @@
+---
+title: "solution2"
+output: html_document
+date: "2024-10-06"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Part 1: Logistic regression
+
+## a) log.likelihood and explanation 
+- log-likelihood function: \[
+\ell(\beta) = \sum_{i=1}^{n} \left[ y_i (x_i^T \beta) - \log(1 + e^{x_i^T \beta}) \right]
+\]
+
+- explanation: 
+- With start with a initial estimation of $\beta$ and estimate the loglikelihood. 
+- Then we need to calculate the gradient or score function which is the first derivative of the log-likelihood function. 
+- Then we calculate the Hessian, which is the second derivative of the log-likelihood function. 
+- The updated $\beta$ is \[
+\beta^{(t+1)} = \beta^{(t)} + H(\beta^{(t)})^{-1} s(\beta^{(t)})
+\], where we move into the direction of the gradient (to maximise) and scale this by the Hessian to adjust for the curvature of the log-likelihood curve. 
+- Finally, we compare the newly calculated log-likelihood of \beta + 1 and \beta until we reach convergence (difference smaller than $\epsilon$).
+
+## b)
+
+```{R binary 1, eval = TRUE}
+filepath <- "https://www.math.ntnu.no/emner/TMA4315/2018h/mountains"
+mount <- read.table(file = filepath, header = TRUE, col.names = c("height",
+    "prominence", "fail", "success"))
+bin1 = glm(cbind(success, fail) ~ height + prominence, data = mount, family = "binomial")
+model_sum1 = summary(bin1)
+model_sum1
+anova(bin1, test = 'LRT')
+exp(13.686)
+exp(-0.001635)
+exp(-0.000174 )
+```
+#### Interpretation: 
+- If height and prominence are zero, the odds ratio of succeeding ?? is 878525.3 (= exp(13.686). So, for a mountain with height = 0 and prominence = 0, the chances of reaching the summit are high. 
+- If the height increases by one meter, the odds ratio is reduced by the factor 0.9983663. So, the chances to reach the summit get lower with every meter a mountain is higher. 
+- If the prominence increases by one meter, the odds ratio is reduced by the factor 0.999826. So, the chances to reach the summit get lower with every meter of prominence. 
+- Both parameters seem to reduce the odds ratio not too strongly. But given the fact that the data set only included the highest mountains with heights over 7000 meters, the influence comes through the large numbers in height. 
+
+#### Significance: 
+- The Wald test shows that the H1 ($\beta$ is not 0) gets significant for the two coefficients. With leads us to the assumption that both height and prominence have an influence on the success of reaching a mountain. Both coefficients are significant on a level with $\alpha$ < 0.001. So, they have really low p values. 
+- The LRT shows the same result. 
+
+#### Confidence intervals: 
+```{R binary 1 CI, eval = TRUE}
+
+beta_height <- coef(model_sum1)["height", "Estimate"]
+se_height <- coef(model_sum1)["height", "Std. Error"]
+
+# Calculate the 95% confidence interval
+z_value <- 1.96
+beta_L <- beta_height - z_value * se_height
+beta_H <- beta_height + z_value * se_height
+
+# CI
+conf_interval_log_odds <- c(beta_L, beta_H)
+conf_interval_log_odds
+
+# Exponentiation of the CI
+conf_interval_odds_ratio <- exp(conf_interval_log_odds)
+conf_interval_odds_ratio
+```
+#### Interpretation of log of confidene intervall: 
+- The CI for the odds ratio is not covering the 0 which shows that it is significant again. 
+- Also, the CI is showing that the success reduction per meter of the odds ration is between 0.9980882 and 0.9986437, which is overall a small reduction but also the CI is quite narrow which shows a high stability. 
+
+## c) 
+```{R residuals, eval = TRUE}
+library(ggplot2)
+deviances <- residuals(bin1, type = "deviance")
+
+# Plot height
+ggplot(mount, aes(x = height, y = deviances)) +
+  geom_point() +
+  labs(title = "Deviance Residuals vs Height", x = "Height", y = "Deviance Residuals") +
+  theme_minimal()
+
+# Plot prominence
+ggplot(mount, aes(x = prominence, y = deviances)) +
+  geom_point() +
+  labs(title = "Deviance Residuals vs Prominence", x = "Prominence", y = "Deviance Residuals") +
+  theme_minimal()
+```
+
+#### Description and interpretation: 
+- For height: The deviance residuals are scattered quite evenly around the x-axis. There are more stronger deviances in the negative direction than positive. I would not say that there is a funnel shape in the plot, but the data for mountains over 8200 meters is sparse, so it's hard to evaluate.
+- For prominence: For prominence as well, the deviance residuals are scattered quite evenly around the x-axis with no clear pattern recognisable. 
+- The deviance residuals indicate a good model fit or at least that there is no problem with the fit. 
+
+
+```{R probs, eval = TRUE}
+# loglink???
+
+height_seq <- seq(min(mount$height), max(mount$height), length.out = 100)
+prominence_seq <- seq(min(mount$prominence), max(mount$prominence), length.out = 100)
+
+# Create a data frame of all combinations of height and prominence
+grid_data <- expand.grid(height = height_seq, prominence = prominence_seq)
+
+# Predict the probabilities for the grid data
+grid_data$prob <- predict(bin1, newdata = grid_data, type = "response")
+
+ggplot(grid_data, aes(x = height, y = prominence, fill = prob)) +
+  geom_raster() + 
+  geom_contour(aes(z = prob), color = "black") +
+  scale_fill_gradientn(colours = terrain.colors(10)) +
+  labs(title = "Estimated Probabilities as a Function of Height and Prominence",
+       x = "Height", y = "Prominence", fill = "Probability") +
+  theme_minimal()
+
+```
+
+#### Interpretation: 
+- The plot shows that the estimated probabilities for smaller mountains with smaller prominence are higher than for the higher ones with higher prominence.
+- This is logical as it is harder to get up a larger mountain. 
+
+## d) 
+CI formula: $CI_{\eta} = \left( \hat{\eta} - 1.96 \cdot \text{SE}(\eta), \hat{\eta} + 1.96 \cdot \text{SE}(\eta) \right)$
+
+``` {R Everest and Chogolisa, eval = TRUE}
+
+everest<- data.frame(height = 8848, prominence = 8848)
+eta_everest <- predict(bin1, newdata = everest, type = "link", se.fit = TRUE)
+prob_everest <- predict(bin1, newdata = everest, type = "response")
+
+# Confidence interval for eta
+eta_L <- eta_everest$fit - 1.96 * eta_everest$se.fit
+eta_H <- eta_everest$fit + 1.96 * eta_everest$se.fit
+
+# Transform back to probability
+prob_L <- 1 / (1 + exp(-eta_L))
+prob_H <- 1 / (1 + exp(-eta_H))
+
+cat('probability for Mount Everest', prob_everest, '\n')
+cat('Confidence Interval:', prob_L, 'to', prob_H, '\n', '\n')
+
+chog <- data.frame(height = 7665, prominence = 1624)
+eta_chog <- predict(bin1, newdata = chog, type = "link", se.fit = TRUE)
+prob_chog <- predict(bin1, newdata = chog, type = "response")
+
+# Confidence interval for eta
+eta_L_chog <- eta_chog$fit - 1.96 * eta_everest$se.fit
+eta_H_chog <- eta_chog$fit + 1.96 * eta_everest$se.fit
+
+# Transform back to probability
+prob_L_chog <- 1 / (1 + exp(-eta_L_chog))
+prob_H_chog <- 1 / (1 + exp(-eta_H_chog))
+
+cat('probability for Chogolisa', prob_chog, '\n')
+cat('Confidence Interval:', prob_L_chog, 'to', prob_H_chog)
+
+```
+
+#### Reasonable? 
+- I would not say it is reasonable to model Mount Everest as the highest prominence in the data the model learned with was 4608 meters, which is way below the 8848 meters of Mount Everest. So, the model might fail in extrapolating to this high value of prominence. 
+```{R vis of combinations}
+max(mount$prominence)
+min(mount$prominence)
+
+ggplot(mount, aes(x = height, y = prominence, color = success / (success + fail))) +
+  geom_point() +
+  labs(
+    x = "Height (meters)",
+    y = "Prominence (meters)",
+    color = "Success Rate"
+  ) +
+  scale_color_gradient(low = "blue", high = "red") + # Customize colors if desired
+  theme_minimal() # Optional: for a cleaner theme
+```
+
+#### Chogolisa: 
+- The model underestimates the success probability with about 70% as it was historically about 90%. 
+- The CI interval is quite large which indicates a high uncertainty. 
+- The model might/should fit better for this value as it learned with values in this range, but Chogolisa has a combination of values which is quite rare (see visualisation above). So, maybe that is way the model does not fit the value accurately. 
+
+
+# Part 2: Poisson regression – Eliteserien 2023
+
+```{R load data 2}
+filepath <- "https://www.math.ntnu.no/emner/TMA4315/2024h/eliteserien2024.csv"
+eliteserie <- read.csv(file = filepath)
+
+NGames <- table(c(eliteserie$home[!is.na(eliteserie$yh)], eliteserie$away[!is.na(eliteserie$yh)]))
+RangeofGames <- range(NGames)
+
+eliteserie
+```
+
+## a) 
+
+```{R Pearson test and contingency table, eval = TRUE}
+library(stats)
+## With R function 
+max_goals = max(max(eliteserie$yh, na.rm = TRUE), max(eliteserie$ya, na.rm = TRUE))
+    
+goal_table <- matrix(0, nrow = max(eliteserie$yh, na.rm = TRUE)+1, ncol = max(eliteserie$ya, na.rm = TRUE)+1)
+
+all_goals_home <- 0: max(eliteserie$yh, na.rm = TRUE)
+all_goals_away <- 0: max(eliteserie$ya, na.rm = TRUE)
+
+rownames(goal_table) <- paste("Home", all_goals_home)
+colnames(goal_table) <- paste("Away", all_goals_away)
+
+
+# iterate and add data
+for (i in 1:nrow(eliteserie)) {
+  if (!is.na(eliteserie$yh[i]) && !is.na(eliteserie$ya[i])) {
+    home_goals <- eliteserie$yh[i]
+    away_goals <- eliteserie$ya[i]
+  
+    goal_table[as.character(paste("Home", home_goals)), as.character(paste("Away", away_goals))] <- 
+      goal_table[as.character(paste("Home", home_goals)), as.character(paste("Away", away_goals))] + 1}
+}
+print(goal_table)
+
+# Chi-squared test of independence
+goal_table_adj <- goal_table + 0.5
+chi_test <- chisq.test(goal_table_adj)
+print(chi_test)
+```
+
+#### Interpretation: 
+The Pearson Chi Square test is not significant, so we keep the H0 that there is no depedency between the variables. 
+For the model this means, there is no evidence against the independence and we can keep our assumptions that home goals and away goals are independent.
+
+## b)
+```{R preliminary order, eval = TRUE}
+unique_clubs <- unique(c(eliteserie$home, eliteserie$away))
+
+# data frame empty
+clubs_df <- data.frame(
+  club = unique_clubs,
+  points = 0,
+  no_goals = 0
+)
+
+for(i in 1:nrow(eliteserie)) {
+  
+  if (!is.na(eliteserie$yh[i]) && !is.na(eliteserie$ya[i])) {
+    # Update no of goals
+    clubs_df$no_goals[clubs_df$club == eliteserie$home[i]] <- 
+      clubs_df$no_goals[clubs_df$club == eliteserie$home[i]] + eliteserie$yh[i]
+    
+    clubs_df$no_goals[clubs_df$club == eliteserie$away[i]] <- 
+      clubs_df$no_goals[clubs_df$club == eliteserie$away[i]] + eliteserie$ya[i]
+    
+    # Update points based on match results
+    # draw
+    if (eliteserie$yh[i] == eliteserie$ya[i]) {
+      clubs_df$points[clubs_df$club == eliteserie$home[i]] <- 
+        clubs_df$points[clubs_df$club == eliteserie$home[i]] + 1
+      clubs_df$points[clubs_df$club == eliteserie$away[i]] <- 
+        clubs_df$points[clubs_df$club == eliteserie$away[i]] + 1
+      
+    } 
+    # Home team wins
+    else if (eliteserie$yh[i] > eliteserie$ya[i]) {
+      clubs_df$points[clubs_df$club == eliteserie$home[i]] <- 
+        clubs_df$points[clubs_df$club == eliteserie$home[i]] + 3
+      
+    } 
+    # Away team wins
+    else {
+      clubs_df$points[clubs_df$club == eliteserie$away[i]] <- 
+        clubs_df$points[clubs_df$club == eliteserie$away[i]] + 3
+    }
+  }
+}
+print(clubs_df)
+
+
+```
+
+
+## c) 
+
+
+## d)
+
+
