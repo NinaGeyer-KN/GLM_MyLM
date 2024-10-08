@@ -232,6 +232,8 @@ For the model this means, there is no evidence against the independence and we c
 
 ## b)
 ```{R preliminary order, eval = TRUE}
+library(dplyr)
+
 unique_clubs <- unique(c(eliteserie$home, eliteserie$away))
 
 # data frame empty
@@ -273,6 +275,7 @@ for(i in 1:nrow(eliteserie)) {
     }
   }
 }
+clubs_df <- clubs_df[order(clubs_df$points, decreasing = FALSE),]
 print(clubs_df)
 
 
@@ -281,7 +284,88 @@ print(clubs_df)
 
 ## c) 
 
+```{R myPoisson, eval = TRUE}
+# helper function loglikelihood 
+loglik <- function(par, args) {
+    y <- args$y  # observed counts
+    x <- args$x  # predictor matrix
+
+    # Linear predictor: eta = X * beta
+    eta <- x %*% par
+
+    # Log-likelihood for Poisson regression (log link)
+    res <- sum(y * eta - exp(eta))
+    
+    return(res) # REMEMBER correct?????
+}
+
+
+# helper function gradient of loglikelihood 
+loglik_gr <- function(par, args) {
+    y <- args$y  # observed counts
+    x <- args$x  # predictor matrix
+
+    eta <- x %*% par
+    lambda_hat <- exp(eta)
+    res <- t(x) %*% (y - lambda_hat)
+    
+    return(res)
+} # REMEMBER correct?????
+
+
+myPoisson <- function(args){
+  
+  # insert loop for parameters here 
+  
+  y <- args$y
+  x <- args$x
+  param_list <- args$param
+  
+  # random initial parameters 
+  init_params <- rnorm(len(param_list), mean = 0, sd = 1)
+    
+  opt <- optim(par = init_params, 
+          args = param_list,
+          fn = loglik, # log likelihood function 
+          gr = loglik_gr, # gradient of loglink = score 
+          control = list(fnscale = -1), # maximise
+          hessian = TRUE, # return 
+          method = "BFGS")
+  
+  return(opt)
+  
+}
+
+## prepare vector for ranking 
+
+
+## use myPoisson and create ranking 
+
+  
+## for comparison 
+summary(glm(goals ~ -1 + X, family = "poisson"))
+
+```
+
+#### Comparison with ranking in b): 
+- 
+
+#### Comparison to glm function: 
+- 
 
 ## d)
+```{R simulation, eval = TRUE}
+set.seed(7)
+Unplayed <- eliteserie[is.na(eliteserie$yh), c("home", "away")]
+```
 
+```{R plotting stuff for vis, eval = TRUE}
 
+```
+
+#### comparison to preliminary ranking in 2023 and discussion: 
+- 
+
+```{R histogram, eval = TRUE}
+
+```
