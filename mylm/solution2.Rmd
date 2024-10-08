@@ -191,6 +191,9 @@ NGames <- table(c(eliteserie$home[!is.na(eliteserie$yh)], eliteserie$away[!is.na
 RangeofGames <- range(NGames)
 
 eliteserie
+
+#test <- na.omit(eliteserie)
+#test
 ```
 
 ## a) 
