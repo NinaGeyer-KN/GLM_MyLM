@@ -1,0 +1,193 @@
+---
+title: "solution3"
+output: html_document
+date: "2024-10-27"
+---
+#### Group Number: 
+#### Names: Bernhard Zuidema, Nina Geyer
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+dataset <- read.table("https://www.math.ntnu.no/emner/TMA4315/2018h/jsp2.txt",
+    header = TRUE)
+```
+
+## a) 
+```{r a plot, eval = TRUE}
+library(ggplot2)
+library(GGally)
+ggpairs(data = dataset, mapping = aes(col = gender), columns = c("social",
+    "raven", "math"), legend = 1)
+```
+
+#### Plot: 
+- 
+
+```{r a linear model, eval = TRUE}
+model_a <- lm(math ~ raven + gender, data = dataset)
+summary(model_a)
+```
+
+#### Model:
+Different parts: 
+- Yk is the response variable. In our case this is the math score.
+- Xk are the features or independent variables. In our case these are raven score and gender.
+- $\beta$ are the coefficients, where each coefficient corresponds to a predictor. 
+- $\epsilon$ is the error term representing the deviance of the predicted values from the actual values and capturing unexplained variance. 
+
+Parameter estimates: 
+- The intercept is negative showing that a boy with average raven score will have a math score below average. 
+- The coefficient of raven is positive (0.1965) showing that with higher score in the raven matrix, the math score is higher. This makes sense as the raven score is supposed to measure intelligence. The effect of the raven score is significant. 
+- The effect of gendergirl is 2.5381. So, girls have better math scores than boys in this sample. Also, the effect of gender girl is positive. 
+- The model has an R-squared of 0.11 so is explaining about 11% of the variance and is significantly explaining variance. 
+
+
+What are we investigating with this model? 
+- We are investigating the effect of the raven score (probably supposing it measures at least some kind of intelligence) and gender on the math score. 
+- We are assuming this relationship to be linear. 
+
+## b)
+
+#### Theoretical explanations: 
+Model: 
+- Yk is the response variable with dimensions n x 1. In our case this is the math score.
+- Xk are the features or independent variables with dimension n x p. In our case these are raven score and gender.
+- $\beta$ are the coefficients, where each coefficient corresponds to a predictor with dimension p x 1. 
+- $\gamma$ is the random intercept term that describes the devaince of groups/indiviudals from the population intercept in $\beta$. In our case it describes the effect of schools. 
+- $\epsilon$ is the error term with dimension n x 1 representing the deviance of the predicted values from the actual values and capturing unexplained variance. 
+
+Distributional assumptions: 
+- $\epsilon$ ~ N(0, $\sigma^2$)
+- $\gamma$ ~ N(0, $\tau^2$)
+
+Dependency: 
+- We assume responses at school i and school k to be independent of each other. 
+- There is only a intra class correlation, but no interclass correlation. 
+
+```{r b model, eval = TRUE}
+# install.packages('lme4') # install the package
+library(lme4)
+fitRI1 <- lmer(math ~ raven + gender + (1 | school), data = dataset)
+summary(fitRI1)
+```
+
+#### Model: 
+Comparison: 
+- The raven estimate is for the linear mixed effect model is higher 0.21442 than for the simple model 0.1965. So, raven score is weighted stronger. 
+- The estimate for gendergirl is lower for the linear mixed effect model with 2.51119 in comparison to 2.5381 in the linear model. 
+- Overall, the coefficients are quite similar and there are only small deviances. 
+- The linear mixed effect model is not changing the fixed effects, but 'trying' to cover variance caused by the grouped nature of the data. 
+
+Effect of covariates: 
+- Girls have a higher math score than boys in this dataset. With being a girl adding 2.5381 to the math score.
+- If the raven score rises by one, the math score rises by 0.21442 respectively. So, the raven score (intelligence) has a positive influence on the math score in the model. 
+
+p-values: 
+- Because it is difficult to determine the correct no of degrees of freedom. 
+- Because ???
+
+Test the null hypothesis - raven: 
+```{r b t-test, eval = TRUE}
+t_value_raven <- coef(summary(fitRI1))['raven', 't value']
+t_value_raven  
+p_value <- 2 * pnorm(abs(t_value_raven), lower.tail = FALSE)
+p_value
+```
+
+- The p value is very low. So, the parameter raven score is significant and seems to have an influence. 
+
+Confidence intervals - gender: 
+```{r b CI, eval = TRUE}
+conf_int_gender <- confint(fitRI1, parm = "gendergirl", level = 0.95)
+conf_int_gender
+```
+
+- The confidence interval is not covering the 0 which leads to the conclusion that the parameter is significant and gender girl will increase the math score.
+
+## c)
+
+#### Theoretical explanations:
+Covariance:
+\[
+\text{Cov}(Y_{ij}, Y_{il}) = \tau_0^2 \quad \text{for } j \neq l
+\]
+Correlation: 
+\[
+\text{Corr}(Y_{ij}, Y_{il}) = \frac{\text{Cov}(Y_{ij}, Y_{il})}{\sqrt{\text{Var}(Y_{ij}) \text{Var}(Y_{il})}} = \frac{\tau_0^2}{\tau^2 + \sigma^2} \quad \text{for } j \neq l
+\]
+In our case + comment: 
+
+
+```{r c model, eval = TRUE}
+fitRI2 <- lmer(math ~ raven + (1 | school), data = dataset)
+```
+
+#### Model:
+```{r c plots, eval = TRUE}
+library(ggplot2)
+library(sjPlot)
+gg1 <- plot_model(fitRI2, type = "re", sort.est = "(Intercept)", y.offset = 0.4, dot.size = 1.5) +
+  theme(axis.text.y = element_blank(), axis.ticks.y = element_blank()) + labs(title = "Random intercept (RI)")
+gg2 <- plot_model(fitRI2, type = "diag", prnt.plot = FALSE, title = "Quantile plot", geom.size = 1)
+gg3 <- ggplot() + geom_density(aes(x = ranef(fitRI2)$school[[1]])) + labs(x = "x", y = "y", title = "Density of RI")
+df <- data.frame(fitted = fitted(fitRI2), resid = residuals(fitRI2, scaled = TRUE))
+gg4 <- ggplot(df, aes(fitted,resid)) + geom_point(pch = 21) +
+  geom_hline(yintercept = 0, linetype = "dashed") +
+  geom_smooth(se = FALSE, col = "red", size = 0.5, method = "loess") +
+  labs(x = "Fitted values", y = "Residuals", title = "Residuals vs Fitted values")
+gg5 <- ggplot(df, aes(sample=resid)) + stat_qq(pch = 19) +
+  geom_abline(intercept = 0, slope = 1, linetype = "dotted") +
+  labs(x = "Theoretical quantiles", y = "Standardized residuals", title = "Normal Q-Q")
+
+library(ggpubr)
+gg2[[2]]$school
+
+ggarrange(gg1, gg3, gg4, gg5)
+
+df <- data.frame(x = rep(range(dataset$raven), each = 49),
+                 y = coef(fitRI2)$school[,1] + coef(fitRI2)$school[,2] * rep(range(dataset$raven), each = 49),
+                 School = factor(rep(c(1:42, 44:50), times = 2)))
+ggplot(df, aes(x = x, y = y, col = School)) + geom_line()
+```
+
+#### Plots: 
+
+
+## d) 
+```{r d model 1, eval = TRUE}
+fitRI3 <- lmer(math ~ raven + social + (1 | school), data = dataset)
+anova(fitRI2, fitRI3)
+```
+#### Model fitRI3:
+
+```{r d model 2, eval = TRUE}
+fitRIS <- lmer(math ~ raven + (1 + raven | school), data = dataset)
+summary(fitRIS)
+```
+
+#### Model fitRIS:
+```{r d plots, eval = TRUE}
+df <- data.frame(x = rep(range(dataset$raven), each = 49),
+                 y = coef(fitRIS)$school[,1] + coef(fitRIS)$school[,2] * rep(range(dataset$raven), each = 49),
+                 School = factor(rep(c(1:42, 44:50), times = 2)))
+gg1 <- ggplot(df, aes(x = x, y = y, col = School)) + geom_line()
+
+gg2 <- plot_model(fitRIS, type = "re", sort.est = "(Intercept)", y.offset = 0.4, dot.size = 1.5) +
+  theme(axis.text.y = element_blank(), axis.ticks.y = element_blank()) + labs(title = "Random intercept (RI)")
+
+ggarrange(gg1, gg2, ncol = 2, legend = FALSE)
+```
+#### Plots: 
+
+## e) 
+Why is it not suitable to use a linear mixed effects model?
+-
+
+What type of model would be more suitable? (hint: IL module 7)
+-
+How would we add a random school intercept into this model (in which part of the model)?
+-
+What is the main challenge with this type of models? (hint: marginal model)
+-
+Fit the equivalent model to fitRI1, and comment on the differences in the model inferences.
+- 
